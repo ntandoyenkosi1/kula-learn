@@ -1,10 +1,13 @@
 import { Alert, Card, Button } from "react-bootstrap";
-import Footer from "../layout/Footer";
-//import HomeSideBar from "../layout/HomeSideBar";
+import { useAuth0 } from "@auth0/auth0-react";
 const Home=()=>{
+  const { user, isAuthenticated } = useAuth0();
+  console.log(isAuthenticated)
+  console.log(user)
+  
     return <div>
         <Alert variant="success">
-  <Alert.Heading>Welcome to Kula Learn</Alert.Heading>
+  <Alert.Heading><b>Welcome to Kula Learn</b></Alert.Heading>
   <p>
     Use this platform to learn a new skill. Register a new account or login to gain access to our range of online courses we offer here at Kula.
   </p>
@@ -32,11 +35,9 @@ const Home=()=>{
                 In this course you will learn what is Blockchain? What are its benefits, advantages, disadvantages and practical use cases.
               </p>
             </Card.Text>
-            <Button variant="primary">Go to course</Button>
+            <Button variant="primary" >Go to course</Button>
         </Card.Body>
-        
         </Card>
-        <Footer/>
     </div>
 }
 export default Home;

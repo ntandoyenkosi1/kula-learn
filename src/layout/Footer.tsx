@@ -1,14 +1,20 @@
+import { Link } from "react-router-dom";
 import "../App.css";
 const Footer=()=>{
     return <div>
         <div>
-            <a href="home" className="footer1">Home</a>
+        &nbsp; &nbsp;
+            <span className="footer1"><Link className="footer1" to="/">Home</Link></span>
             &nbsp;
-            <a href="register" className="footer1">Register</a>
+            <span  className="footer1"><Link className="footer1" to="/register">Register</Link></span>
             &nbsp;
-            <a href="about" className="footer1">About</a>
+            <span className="footer1"><Link className="footer1" to="/about">About</Link></span>
             &nbsp;
-            <a href="github" className="footer1">Github</a>
+            <span className="footer1"><Link className="footer1" to="/github">Github</Link></span>
+            &nbsp;
+            <span className="footer1"><Link className="footer1" to="/courses">Courses</Link></span>
+            &nbsp;
+            <span className="footer1"><Link className="footer1" to="/profile">Profile</Link></span>
         </div>
     </div>
 }

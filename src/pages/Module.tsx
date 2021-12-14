@@ -1,7 +1,14 @@
 import video from "../assets/Media1.mp4"
 import explain from "../images/presentation.png"
 import { Accordion } from "react-bootstrap"
+
+import { useAuth0} from "@auth0/auth0-react"
+//import type { CourseType } from "./types"
 const Module=(props:any)=>{
+    const { user } = useAuth0();
+    const {isAuthenticated}=useAuth0();
+    console.log(isAuthenticated)
+    console.log(user)
     return <div className="w3-main" style={{marginLeft:"210px"}}>
         <Accordion defaultActiveKey="0">
             <h1 style={{width:"99%"}} className="alert alert-primary">{props.data.title}</h1>
@@ -19,6 +26,9 @@ const Module=(props:any)=>{
         <Accordion.Item eventKey="1" style={{width:"99%"}}>
             <Accordion.Header><h2>Video</h2></Accordion.Header>
             <Accordion.Body>
+            <div>
+        
+        </div>
                 <video src={video} style={{width:"99%"}} autoPlay={false} controls={true}/>
                 </Accordion.Body>
                 </Accordion.Item>

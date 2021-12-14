@@ -3,6 +3,8 @@ import Module from "./Module";
 import { CourseType } from "./types"
 import SideBar from "../layout/SideBar";
 //import video from "../assets/Media.mp4";
+import Profile from "./auth/Profile";
+import { useAuth0 } from "@auth0/auth0-react";
 const courseData:CourseType ={
     title:"Course Title",
     shortDescription:"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
@@ -11,10 +13,16 @@ const courseData:CourseType ={
 }
 const linkData=["Module 1", "Module 2", "Module 3", "Module 4", "Module 5"]
 const Course=()=>{
+    const { user } = useAuth0();
+    console.log(user)
     return <>
         <SideBar data={linkData}/>
         <Main origin="Course"/>
         <Module data={courseData}/>
+        <div>
+        {Profile}
+        </div>
+        
     </>
 }
 export default Course;
