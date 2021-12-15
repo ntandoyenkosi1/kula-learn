@@ -1,8 +1,10 @@
 import { Navbar} from "react-bootstrap";
-import LogoutButton from "../pages/auth/LogoutButton";
-import LoginButton from "../pages/auth/LoginButton";
+import LogoutButton from "../auth/LogoutButton";
+import LoginButton from "../auth/LoginButton";
+import { useAuth0 } from "@auth0/auth0-react";
 const Navigation=()=>{
-    const isAuthenticated=false
+    const {isAuthenticated}=useAuth0();
+
     if(isAuthenticated){
         return <div>
             {/**

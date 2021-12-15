@@ -1,16 +1,18 @@
 import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
 import { useEffect } from 'react';
 import { Alert, Button } from 'react-bootstrap';
-
+import Footer from '../layout/Footer';
+import Main from '../layout/Main';
+import Loading from './Loading';
 
 const Profile = () => {
   const { user } = useAuth0();
-  //const { name, picture, email } = user;
   useEffect(()=>{
     console.log(user)
   },[user])
   return (
     <div>
+      <Main origin="Profile"/>
       <Alert>
         <Alert.Heading as="h2">Profile Information</Alert.Heading>
           <h3>{user?.name}</h3>
@@ -34,14 +36,10 @@ const Profile = () => {
           {JSON.stringify(user, null, 2)}
         </pre>
       </div>
+      <Footer/>
     </div>
   );
 };
-const Loading=()=>{
-  return <div>
-    <div>This is some text that indicates a loading component. It is here to indicate loading state.</div>
-  </div>
-}
 export default withAuthenticationRequired(Profile, {
   onRedirecting: () => <Loading />,
 });
