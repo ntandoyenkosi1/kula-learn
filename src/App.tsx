@@ -1,6 +1,5 @@
 //import HomeSideBar from './layout/HomeSideBar';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import './App.css';
 //import BgImg from "./images/book.png";
 import Profile from './pages/auth/Profile';
 import Course from './pages/Course';

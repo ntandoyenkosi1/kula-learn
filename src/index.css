@@ -11,3 +11,62 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+table,
+th,
+td {
+    border: none;
+    border-collapse: collapse;
+}
+.footer1 {
+    color: black;
+    text-decoration: underline;
+}
+.loading {
+    padding-top: 10%;
+    padding-bottom: 15%;
+}
+.img-decoration {
+    max-width: 90px;
+    max-height: 90px;
+}
+.align-center {
+    text-align: center;
+}
+p,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Open Sans', sans-serif;
+}
+
+.App-header {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+}
+.custom-btn:hover {
+    background-color: aquamarine;
+}
+.sidebar-btn:hover {
+    background-color: aquamarine;
+}
+.sidebar-btn::after {
+    background-color: aquamarine;
+}
+.sidebar-btn {
+    cursor: pointer;
+}
+.custom-btn {
+    padding: 8px 70%;
+    white-space: nowrap;
+    float: left;
+    width: auto;
+    border: none;
+    outline: 0;
+}

@@ -1,4 +1,4 @@
-import icon from "../images/falling-star.png"
+//import icon from "../images/falling-star.png"
 const HomeSideBar=()=>{
     function w3_close() {
         document.getElementById("mySidebar")!.style.display = "none";

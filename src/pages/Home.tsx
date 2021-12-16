@@ -1,6 +1,6 @@
 import { Alert, Button, Card, CardGroup } from 'react-bootstrap'
 //import { useAuth0 } from "@auth0/auth0-react";
-import '../App.css'
+
 import Footer from './layout/Footer'
 import Main from './layout/Main'
 //import Navigation from './layout/Navigation'
