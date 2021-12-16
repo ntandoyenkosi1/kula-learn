@@ -3,6 +3,7 @@ import { Alert, Button, Card, CardGroup } from 'react-bootstrap'
 import '../App.css'
 import Footer from './layout/Footer'
 import Main from './layout/Main'
+//import Navigation from './layout/Navigation'
 const Home = () => {
     //const { user, isAuthenticated } = useAuth0();
     // console.log(isAuthenticated)

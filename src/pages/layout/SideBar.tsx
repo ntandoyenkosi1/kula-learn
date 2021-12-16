@@ -13,7 +13,7 @@ const SideBar=(props:any)=>{
         const tr = tab.insertRow(-1);
         const tabCell = tr.insertCell(-1);
         //tabCell.onclick=()=>console.log(l.title)
-        tabCell.className="button text-center fs-5 w3-large custom-btn"
+        tabCell.className="button text-center fs-5 w3-large sidebar-btn"
         tabCell.innerHTML = l.title;
         tabCell.style.justifyContent="center";
         tabCell.style.alignItems="center"

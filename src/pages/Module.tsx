@@ -1,7 +1,7 @@
 //import { useAuth0 } from "@auth0/auth0-react"
 import { useEffect, useState } from "react"
 import { Accordion } from "react-bootstrap"
-import icon from "./assets/falling-star.png"
+//import icon from "./assets/falling-star.png"
 import video from "./assets/Media1.mp4"
 import explain from "./assets/presentation.png"
 import Footer from "./layout/Footer"
@@ -15,13 +15,14 @@ const Module=(props:any)=>{
     //const [links, setLinks]=useState([])
     //const svg1=<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-wifi-1" viewBox="0 0 16 16"><path d="M11.046 10.454c.226-.226.185-.605-.1-.75A6.473 6.473 0 0 0 8 9c-1.06 0-2.062.254-2.946.704-.285.145-.326.524-.1.75l.015.015c.16.16.407.19.611.09A5.478 5.478 0 0 1 8 10c.868 0 1.69.201 2.42.56.203.1.45.07.611-.091l.015-.015zM9.06 12.44c.196-.196.198-.52-.04-.66A1.99 1.99 0 0 0 8 11.5a1.99 1.99 0 0 0-1.02.28c-.238.14-.236.464-.04.66l.706.706a.5.5 0 0 0 .707 0l.708-.707z"/></svg>
     const tab = document.createElement("table")
+    tab.className="nav nav-pills flex-column mb-auto"
     props.data.forEach((l:ModuleData)=>{
         const tr = tab.insertRow(-1)
         const tabCell = tr.insertCell(-1)
         tabCell.onclick = () => {
             setData(l)
         }
-        tabCell.className = 'button text-center fs-5 w3-large custom-btn'
+        tabCell.className = 'nav-link link-dark sidebar-btn'//'button text-center fs-5 w3-large custom-btn'
         tabCell.innerHTML = l.title
         tabCell.style.justifyContent = 'center'
         tabCell.style.alignItems = 'center'
@@ -40,7 +41,7 @@ const Module=(props:any)=>{
                 id="mySidebar"
             >
                 <img
-                    src={icon}
+                    src="https://i.ibb.co/1GgrKCJ/goat.png"
                     alt="logo"
                     className="rounded mx-auto d-block"
                     style={{ width: '90px', height: '90px' }}
@@ -51,7 +52,7 @@ const Module=(props:any)=>{
                 >
                     Close &times;
                 </button>
-                <div style={{ justifyContent: 'center', alignItems: 'center' }} id="sidebar"></div>
+                <div className="nav nav-pills flex-column mb-auto" style={{ justifyContent: 'center', alignItems: 'center' }} id="sidebar"></div>
             </div>
             <div className="w3-main" style={{ marginLeft: '210px' }}>
                 <div className="w3-teal">
