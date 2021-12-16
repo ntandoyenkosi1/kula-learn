@@ -1,5 +1,5 @@
 import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
-import { useEffect } from 'react';
+//import { useEffect } from 'react';
 import { Alert, Button } from 'react-bootstrap';
 import Footer from '../layout/Footer';
 import Main from '../layout/Main';
@@ -7,9 +7,9 @@ import Loading from './Loading';
 
 const Profile = () => {
   const { user } = useAuth0();
-  useEffect(()=>{
-    console.log(user)
-  },[user])
+  // useEffect(()=>{
+  //   console.log(user)
+  // },[user])
   return (
     <div>
       <Main origin="Profile"/>

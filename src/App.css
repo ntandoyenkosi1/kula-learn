@@ -13,6 +13,17 @@ table, th, td {
   padding-top: 10%;
   padding-bottom: 15%;
 }
+.img-decoration{
+  max-width: 90px;
+  max-height: 90px;
+}
+.align-center{
+  text-align: center;
+}
+p, h3, h4, h5, h6{
+  font-family: 'Open Sans', sans-serif;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;

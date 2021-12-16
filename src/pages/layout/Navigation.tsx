@@ -18,7 +18,6 @@ const Navigation=()=>{
                 <a href="#home" className="button text-center fs-5 w3-large" style={{color:"white"}}><LogoutButton/></a>
                 </Navbar.Text>
                 </Navbar.Collapse>
-                
             </Navbar>
         </div>
     }
@@ -32,10 +31,8 @@ const Navigation=()=>{
                 <a href="#home" className="button text-center fs-5 w3-large" style={{color:"white"}}><LoginButton/></a>
                 </Navbar.Text>
                 </Navbar.Collapse>
-                
             </Navbar>
     </div>
     }
-    
 }
 export default Navigation;
