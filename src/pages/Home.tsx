@@ -14,16 +14,16 @@ const Home = () => {
             <Main origin="Home" />
             <Alert variant="secondary">
                 <Alert.Heading>
-                    <h2 className="align-center">
+                    <h2>
                         <b>Welcome to Kula Learn</b>
                     </h2>
                 </Alert.Heading>
             </Alert>
-            <p className="align-center">
+            <p>
                 Use this platform to learn a new skill. Register a new account or login to gain
                 access to our range of online courses we offer here at Kula.
             </p>
-            <h2 className="align-center">
+            <h2>
                 <b>Why choose Kula?</b>
             </h2>
             <CardGroup>

@@ -30,14 +30,29 @@ td {
 .align-center {
     text-align: center;
 }
-p,
+
+h1,
+h2,
 h3,
 h4,
 h5,
 h6 {
     font-family: 'Open Sans', sans-serif;
+    text-align: center;
+    font-weight: bold;
 }
-
+p, label{
+    font-family: 'Open Sans', sans-serif;
+    text-align: center;
+}
+.textarea{
+    max-width: 1370px;
+    max-height: 500px;
+}
+.center {
+    position: relative;
+    left: 40%;
+  }
 .App-header {
     background-color: #282c34;
     min-height: 100vh;

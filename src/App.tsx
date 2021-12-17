@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Profile from './pages/auth/Profile';
 import Course from './pages/Course';
 import Home from './pages/Home';
+import Create from "./pages/Create";
 const App=()=> {
   return (
     <div>
@@ -12,6 +13,7 @@ const App=()=> {
           <Route path="/"  element={<Home />} />
           <Route path="/courses"  element={<Course />} />
           <Route path="/profile"  element={<Profile />} />
+          <Route path="/courses/create"  element={<Create />} />
         </Routes>
         </Router>
     </div>
