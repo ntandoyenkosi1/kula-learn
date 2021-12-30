@@ -1,6 +1,6 @@
 //import { useAuth0 } from "@auth0/auth0-react"
 import { useEffect, useState } from "react"
-import { Accordion } from "react-bootstrap"
+import { Accordion, Alert } from "react-bootstrap"
 //import icon from "./assets/falling-star.png"
 import video from "./assets/Media1.mp4"
 import explain from "./assets/presentation.png"
@@ -22,7 +22,7 @@ const Module=(props:any)=>{
         tabCell.onclick = () => {
             setData(l)
         }
-        tabCell.className = 'nav-link link-dark sidebar-btn'//'button text-center fs-5 w3-large custom-btn'
+        tabCell.className = 'nav-link link-dark sidebar-btn alert'//'button text-center fs-5 w3-large custom-btn'
         tabCell.innerHTML = l.title
         tabCell.style.justifyContent = 'center'
         tabCell.style.alignItems = 'center'
@@ -40,12 +40,15 @@ const Module=(props:any)=>{
                 style={{ width: '200px' }}
                 id="mySidebar"
             >
-                <img
+                {/* <img
                     src="https://i.ibb.co/1GgrKCJ/goat.png"
                     alt="logo"
                     className="rounded mx-auto d-block"
                     style={{ width: '90px', height: '90px' }}
-                />
+                /> */}
+                <Alert variant="success">
+                <h2><b>Chapters</b></h2>
+                </Alert>
                 <button
                     className="w3-bar-item w3-button w3-large w3-hide-large"
                     onClick={() => (document.getElementById('mySidebar')!.style.display = 'none')}

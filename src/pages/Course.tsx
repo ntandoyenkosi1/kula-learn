@@ -1,4 +1,5 @@
 //import video from "../assets/Media.mp4";
+import { useEffect, useState } from 'react'
 import Profile from './auth/Profile'
 import Module from './Module'
 import type ModuleType from './types'
@@ -46,6 +47,15 @@ const ModuleData: ModuleType[] = [
     },
 ]
 const Course = () => {
+    const [moduleData, setModuleData]=useState<ModuleType[]>(ModuleData)
+    useEffect(()=>{
+          void fetch("http://localhost:4000/videos/all", {
+            method: 'GET',
+            redirect: 'follow'
+          })
+            .then(response => response.json())
+            .then(result => {setModuleData(result);/*console.log(result);*/})
+    },[])
     return (
         <>
             {/* <SideBar data={linkData}/>
@@ -53,7 +63,7 @@ const Course = () => {
         <Module data={courseData}/> */}
             {/* <SideBar data={ModuleData}/> */}
             {/* <Main origin="Course"/> */}
-            <Module data={ModuleData} />
+            <Module data={moduleData} />
             <div>{Profile}</div>
         </>
     )

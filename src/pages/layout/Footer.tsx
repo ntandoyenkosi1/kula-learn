@@ -12,6 +12,8 @@ const Footer=()=>{
             &nbsp;
             <span className="footer1"><Link className="footer1" to="/github">{github}Github</Link></span>
             &nbsp; */}
+            <span className="footer1"><Link className="footer1" to="/course">Course</Link></span>
+            &nbsp;
             <span className="footer1"><Link className="footer1" to="/courses">Courses</Link></span>
             &nbsp;
             <span className="footer1"><Link className="footer1" to="/profile">Profile</Link></span>
