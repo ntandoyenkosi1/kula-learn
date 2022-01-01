@@ -1,14 +1,9 @@
 import { Alert, Button, Card, CardGroup } from 'react-bootstrap'
-//import { useAuth0 } from "@auth0/auth0-react";
-
 import Footer from './layout/Footer'
 import Main from './layout/Main'
-//import Navigation from './layout/Navigation'
+import { useNavigate } from 'react-router-dom'
 const Home = () => {
-    //const { user, isAuthenticated } = useAuth0();
-    // console.log(isAuthenticated)
-    // console.log(user)
-
+    const navigate=useNavigate()
     return (
         <div>
             <Main origin="Home" />
@@ -116,7 +111,7 @@ const Home = () => {
                             advantages, disadvantages and practical use cases.
                         </p>
                     </Card.Text>
-                    <Button variant="primary">Go to course</Button>
+                    <Button variant="primary" onClick={()=>navigate("/course/c9baa837-b503-4a08-804b-b318ad7ee7d7")}>Go to course</Button>
                 </Card.Body>
             </Card>
             <Footer />

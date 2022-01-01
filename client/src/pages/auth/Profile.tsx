@@ -7,9 +7,6 @@ import Loading from './Loading';
 
 const Profile = () => {
   const { user } = useAuth0();
-  // useEffect(()=>{
-  //   console.log(user)
-  // },[user])
   return (
     <div>
       <Main origin="Profile"/>

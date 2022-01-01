@@ -2,10 +2,10 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 //import BgImg from "./images/book.png";
 import Profile from './pages/auth/Profile';
-import Course from './pages/Course';
+import Course from './pages/course/Course';
 import Home from './pages/Home';
-import Create from "./pages/Create";
-import Courses from "./pages/Courses";
+import Create from "./pages/course/Create";
+import Courses from "./pages/course/Courses";
 const App=()=> {
   return (
     <div>
@@ -13,6 +13,7 @@ const App=()=> {
         <Routes>
           <Route path="/"  element={<Home />} />
           <Route path="/course"  element={<Course />} />
+          <Route path="/course/:id" element={<Course />}/>
           <Route path="/courses"  element={<Courses />} />
           <Route path="/profile"  element={<Profile />} />
           <Route path="/courses/create"  element={<Create />} />

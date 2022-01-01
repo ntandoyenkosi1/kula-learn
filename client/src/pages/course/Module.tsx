@@ -2,15 +2,17 @@
 import { useEffect, useState } from "react"
 import { Accordion, Alert } from "react-bootstrap"
 //import icon from "./assets/falling-star.png"
-import video from "./assets/Media1.mp4"
-import explain from "./assets/presentation.png"
-import Footer from "./layout/Footer"
-import Navigation from "./layout/Navigation"
-import type ModuleData from "./types"
+import video from "../assets/Media1.mp4"
+import explain from "../assets/presentation.png"
+import Loading from "../auth/Loading"
+import Footer from "../layout/Footer"
+import Navigation from "../layout/Navigation"
+import type ModuleData from "../types"
 
 const Module=(props:any)=>{
     const placeHolder:ModuleData=props.data[0]
     const [data, setData]=useState<ModuleData>(placeHolder)
+    const [toggled, setToggled]=useState(false)
     //const { user, isAuthenticated } = useAuth0();
     //const [links, setLinks]=useState([])
     //const svg1=<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-wifi-1" viewBox="0 0 16 16"><path d="M11.046 10.454c.226-.226.185-.605-.1-.75A6.473 6.473 0 0 0 8 9c-1.06 0-2.062.254-2.946.704-.285.145-.326.524-.1.75l.015.015c.16.16.407.19.611.09A5.478 5.478 0 0 1 8 10c.868 0 1.69.201 2.42.56.203.1.45.07.611-.091l.015-.015zM9.06 12.44c.196-.196.198-.52-.04-.66A1.99 1.99 0 0 0 8 11.5a1.99 1.99 0 0 0-1.02.28c-.238.14-.236.464-.04.66l.706.706a.5.5 0 0 0 .707 0l.708-.707z"/></svg>
@@ -20,6 +22,7 @@ const Module=(props:any)=>{
         const tr = tab.insertRow(-1)
         const tabCell = tr.insertCell(-1)
         tabCell.onclick = () => {
+            setToggled(true)
             setData(l)
         }
         tabCell.className = 'nav-link link-dark sidebar-btn alert'//'button text-center fs-5 w3-large custom-btn'
@@ -71,6 +74,7 @@ const Module=(props:any)=>{
                         <Navigation />
                     </div>
                 </div>
+                {toggled?<>
                 <Accordion defaultActiveKey="0">
                     <h1 style={{ width: '99%' }} className="alert alert-primary">
                         {data?.title}
@@ -119,7 +123,7 @@ const Module=(props:any)=>{
                             <div style={{ textAlign: 'justify' }}>{data?.longDescription}</div>
                         </Accordion.Body>
                     </Accordion.Item>
-                </Accordion>
+                </Accordion></>:<><h3>Select a chapter</h3><Loading/></>}
                 <Footer />
             </div>
         </div>
