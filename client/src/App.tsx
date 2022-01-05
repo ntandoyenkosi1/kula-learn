@@ -6,15 +6,18 @@ import Course from './pages/course/Course';
 import Home from './pages/Home';
 import Create from "./pages/course/Create";
 import Courses from "./pages/course/Courses";
+import Edit from "./pages/course/Edit";
 const App=()=> {
   return (
     <div>
       <Router>
         <Routes>
           <Route path="/"  element={<Home />} />
-          <Route path="/course"  element={<Course />} />
+          {/* <Route path="/course"/> */}
           <Route path="/course/:id" element={<Course />}/>
+          <Route path="/course/edit/:id" element={<Edit/>}/>
           <Route path="/courses"  element={<Courses />} />
+
           <Route path="/profile"  element={<Profile />} />
           <Route path="/courses/create"  element={<Create />} />
         </Routes>

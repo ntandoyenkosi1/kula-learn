@@ -1,21 +1,26 @@
-import { withAuthenticationRequired } from '@auth0/auth0-react';
-import Loading from '../auth/Loading';
-import { useEffect } from 'react'
-import { Alert, Card, CardGroup } from 'react-bootstrap'
+import { withAuthenticationRequired } from '@auth0/auth0-react'
+import Loading from '../auth/Loading'
+import { useEffect, useState } from 'react'
+import { Alert, Button, Card, CardGroup, Modal } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import Footer from '../layout/Footer'
 import Navigation from '../layout/Navigation'
 const Courses = () => {
-    const navigate=useNavigate()
-    useEffect(()=>{
-        const requestOptions:RequestInit = {
+    const navigate = useNavigate()
+    const [modalShow, setModalShow]=useState(false)
+    const handleEditCourse=()=>{
+        //
+    }
+    useEffect(() => {
+        const requestOptions: RequestInit = {
             method: 'GET',
-            redirect: 'follow'
-          };
-          void fetch("http://localhost:4000/courses/", requestOptions)
-            .then(response => response.json())
-            .then(result => {
-                result.forEach((res:any) => {
+            redirect: 'follow',
+        }
+        void fetch('http://localhost:4000/courses/', requestOptions)
+            .then((response) => response.json())
+            .then((result) => {
+                ///console.log(result)
+                result.forEach((res: any) => {
                     //
                     const existing = document.getElementById('cards-li')
                     const wrapper = document.createElement('div')
@@ -24,6 +29,8 @@ const Courses = () => {
                     const image = document.createElement('img')
                     const preview = document.createElement('button')
                     const enrol = document.createElement('button')
+                    const edit = document.createElement('button')
+                    const del = document.createElement('button')
                     const buttonWrapper = document.createElement('div')
                     wrapper.className = 'shadow p-3 mb-5 bg-body rounded'
                     heading.innerText = res.title
@@ -36,12 +43,44 @@ const Courses = () => {
                     buttonWrapper.className = 'd-grid gap-2 col-6 mx-auto'
                     enrol.innerText = 'Enrol'
                     enrol.className = 'btn btn-primary'
-                    enrol.onclick=()=>{
+                    edit.innerText = 'Edit'
+                    edit.className = 'btn btn-primary'
+                    edit.onclick=()=>{
                         //
+                        navigate(`/course/edit/${res.ID}`)
+                    }
+                    enrol.onclick = () => {
                         navigate(`/course/${res.collectionID}`)
                     }
+                    del.onclick = () => {
+                        const myHeaders = new Headers()
+                        myHeaders.append('Content-Type', 'application/json')
+                       /**@function  */
+                        const raw = JSON.stringify({
+                            id: `${res.ID}`,
+                            collectionID: `${res.collectionID}`,
+                        })
+
+                        const requestOptions: RequestInit = {
+                            method: 'DELETE',
+                            headers: myHeaders,
+                            body: raw,
+                            redirect: 'follow',
+                        }
+
+                        fetch('http://localhost:4000/courses/', requestOptions)
+                            .then((response) => response.json())
+                            .then((result) => {
+                                console.log(result)
+                            })
+                            .catch((error) => console.log('error', error))
+                    }
+                    del.innerText = 'Delete'
+                    del.className = 'btn btn-primary'
                     buttonWrapper.append(preview)
                     buttonWrapper.append(enrol)
+                    buttonWrapper.append(del)
+                    buttonWrapper.append(edit)
                     wrapper.append(heading)
                     wrapper.append(image)
                     wrapper.append(paragraph)
@@ -52,7 +91,23 @@ const Courses = () => {
                     }
                 })
             })
-        },[])
+    }, [])
+    
+        // function CourseModal(props: any) {
+        //     return (
+        //         <Modal {...props} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
+        //             <Modal.Header closeButton>
+        //                 <Modal.Title id="contained-modal-title-vcenter">Edit a course</Modal.Title>
+        //             </Modal.Header>
+        //             <Modal.Body>
+        //                 <Course />
+        //             </Modal.Body>
+        //             <Modal.Footer>
+        //                 <Button onClick={props.onHide}>Close</Button>
+        //             </Modal.Footer>
+        //         </Modal>
+        //     )
+        // }
     return (
         <div>
             <div className="w3-main" style={{ marginLeft: '210px' }}></div>
@@ -74,6 +129,7 @@ const Courses = () => {
                     </h2>
                 </Alert.Heading>
             </Alert>
+           
             <CardGroup>
                 <Card>
                     <Card.Img
@@ -96,6 +152,7 @@ const Courses = () => {
         </div>
     )
 }
-export default withAuthenticationRequired(Courses, {
-    onRedirecting: () => <Loading />,
-  });
+export default Courses
+// export default withAuthenticationRequired(Courses, {
+//     onRedirecting: () => <Loading />,
+//   });

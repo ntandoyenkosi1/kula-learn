@@ -30,7 +30,8 @@ function generateUUID() {
 		}
 	);
 }
-app.put("/course", async (req, res) => {
+// Insert course
+app.post("/course", async (req, res) => {
 	const db = new sqlite3.Database("database.db");
 	db.serialize(function () {
 		const id = generateUUID();
@@ -42,7 +43,51 @@ app.put("/course", async (req, res) => {
 	db.close();
 	res.send(req.body);
 });
-
+//GET All courses
+app.get("/courses/", async (_req, res) => {
+	const db = new sqlite3.Database("database.db");
+	db.serialize(function () {
+		db.all("SELECT * FROM course;", (_err, video) => {
+			res.send(video);
+		});
+		db.close();
+	});
+});
+//GET 1 courses
+app.post("/api/course", async (req, res) => {
+	const db = new sqlite3.Database("database.db");
+	db.serialize(function () {
+		db.all(`SELECT * FROM course WHERE ID="${req.body.id}";`, (_err, video) => {
+			res.send(video);
+		});
+		db.close();
+	});
+});
+//Update course
+app.put("/api/course", async (req, res) => {
+	const db = new sqlite3.Database("database.db");
+	db.serialize(function () {
+		db.run(
+			`UPDATE course SET title="${req.body.title}", shortDescription="${req.body.shortDescription}", imageUrl="${req.body.image}" WHERE ID="${req.body.id}";`
+		);
+	});
+	db.close();
+	res.send(req.body);
+});
+//DELETE course
+app.delete("/courses/", async (req, res) => {
+	const db = new sqlite3.Database("database.db");
+	db.serialize(function () {
+		db.all(`DELETE FROM course where ID="${req.body.id}"`, (_err, video) => {
+			//console.log(0)
+		});
+		db.all(`DELETE FROM module where collectionID="${req.body.collectionID}"`, (_err, video) => {
+			res.send(video);
+		});
+		db.close();
+	});
+});
+//Insert modules
 app.post("/module", async (req, res) => {
 	const db = new sqlite3.Database("database.db");
 	db.serialize(function () {
@@ -56,20 +101,51 @@ app.post("/module", async (req, res) => {
 	db.close();
 	res.send(req.body);
 });
-app.get("/courses/", async (_req, res) => {
-	const db = new sqlite3.Database("database.db");
-	db.serialize(function () {
-		db.all("SELECT * FROM course", (_err, video) => {
-			res.send(video);
-		});
-		db.close();
-	});
-});
+//Get modules
 app.post("/modules", async (req, res) => {
 	const db = new sqlite3.Database("database.db");
 	db.serialize(function () {
 		db.all(
 			`SELECT * FROM module WHERE collectionID="${req.body.id}";`,
+			function (_err, video) {
+				res.send(video);
+			}
+		);
+	});
+	db.close();
+});
+// delete module
+app.delete("/modules", async (req, res) => {
+	const db = new sqlite3.Database("database.db");
+	db.serialize(function () {
+		db.all(
+			`DELETE FROM module WHERE collectionID="${req.body.id}";`,
+			function (_err, video) {
+				res.send(video);
+			}
+		);
+	});
+	db.close();
+});
+//Update module
+app.put("/modules", async (req, res) => {
+	const db = new sqlite3.Database("database.db");
+	db.serialize(function () {
+		db.all(
+			`UPDATE FROM module SET title=${req.body.title} shortDescription=${req.body.shortDescription} longDescription=${req.body.longDescription} WHERE collectionID="${req.body.id}";`,
+			function (_err, video) {
+				res.send(video);
+			}
+		);
+	});
+	db.close();
+});
+// delete module
+app.delete("/courses", async (req, res) => {
+	const db = new sqlite3.Database("database.db");
+	db.serialize(function () {
+		db.all(
+			`DELETE FROM module WHERE collectionID="${req.body.id}";`,
 			function (_err, video) {
 				res.send(video);
 			}
