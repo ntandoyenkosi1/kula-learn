@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { Alert } from 'react-bootstrap'
 import { useNavigate, useParams } from 'react-router-dom'
 const Edit = () => {
@@ -29,13 +29,13 @@ const Edit = () => {
             redirect: 'follow',
         }
 
-        fetch('http://localhost:4000/api/course/', requestOptions)
+        void fetch('http://localhost:4000/api/course/', requestOptions)
             .then((response) => response.json())
-            .then((result) => {
-                console.log(result)
-                //navigate('/courses')
-            })
-            .catch((error) => console.log('error', error))
+            // .then((result) => {
+            //     console.log(result)
+            //     //navigate('/courses')
+            // })
+            // .catch((error) => console.log('error', error))
     }
     useEffect(() => {
         const myHeaders = new Headers()
@@ -51,7 +51,7 @@ const Edit = () => {
             redirect: 'follow',
         }
 
-        fetch('http://localhost:4000/api/course/', requestOptions)
+        void fetch('http://localhost:4000/api/course/', requestOptions)
             .then((response) => response.json())
             .then((result) => {
                 const t = document.getElementById('module-title') as HTMLInputElement
@@ -63,7 +63,7 @@ const Edit = () => {
                 image!.value = result[0].imageUrl
                 imageDisp!.src=result[0].imageUrl
             })
-            .catch((error) => console.log('error', error))
+            // .catch((error) => console.log('error', error))
     }, [])
     return (
         <>
