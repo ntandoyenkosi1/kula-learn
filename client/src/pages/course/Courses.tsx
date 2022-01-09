@@ -1,16 +1,12 @@
-import { withAuthenticationRequired } from '@auth0/auth0-react'
-import Loading from '../auth/Loading'
-import { useEffect, useState } from 'react'
-import { Alert, Button, Card, CardGroup, Modal } from 'react-bootstrap'
+//import { withAuthenticationRequired } from '@auth0/auth0-react'
+//import Loading from '../auth/Loading'
+import { useEffect } from 'react'
+import { Alert, Card, CardGroup } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import Footer from '../layout/Footer'
 import Navigation from '../layout/Navigation'
 const Courses = () => {
     const navigate = useNavigate()
-    const [modalShow, setModalShow]=useState(false)
-    const handleEditCourse=()=>{
-        //
-    }
     useEffect(() => {
         const requestOptions: RequestInit = {
             method: 'GET',
@@ -45,7 +41,7 @@ const Courses = () => {
                     enrol.className = 'btn btn-primary'
                     edit.innerText = 'Edit'
                     edit.className = 'btn btn-primary'
-                    edit.onclick=()=>{
+                    edit.onclick = () => {
                         //
                         navigate(`/course/edit/${res.ID}`)
                     }
@@ -55,7 +51,7 @@ const Courses = () => {
                     del.onclick = () => {
                         const myHeaders = new Headers()
                         myHeaders.append('Content-Type', 'application/json')
-                       /**@function  */
+                        /**@function  */
                         const raw = JSON.stringify({
                             id: `${res.ID}`,
                             collectionID: `${res.collectionID}`,
@@ -68,12 +64,13 @@ const Courses = () => {
                             redirect: 'follow',
                         }
 
-                        fetch('http://localhost:4000/courses/', requestOptions)
-                            .then((response) => response.json())
-                            .then((result) => {
-                                console.log(result)
-                            })
-                            .catch((error) => console.log('error', error))
+                        void fetch('http://localhost:4000/courses/', requestOptions).then(
+                            (response) => response.json()
+                        )
+                        // .then((result) => {
+                        //     console.log(result)
+                        // })
+                        // .catch((error) => console.log('error', error))
                     }
                     del.innerText = 'Delete'
                     del.className = 'btn btn-primary'
@@ -92,22 +89,6 @@ const Courses = () => {
                 })
             })
     }, [])
-    
-        // function CourseModal(props: any) {
-        //     return (
-        //         <Modal {...props} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
-        //             <Modal.Header closeButton>
-        //                 <Modal.Title id="contained-modal-title-vcenter">Edit a course</Modal.Title>
-        //             </Modal.Header>
-        //             <Modal.Body>
-        //                 <Course />
-        //             </Modal.Body>
-        //             <Modal.Footer>
-        //                 <Button onClick={props.onHide}>Close</Button>
-        //             </Modal.Footer>
-        //         </Modal>
-        //     )
-        // }
     return (
         <div>
             <div className="w3-main" style={{ marginLeft: '210px' }}></div>
@@ -129,7 +110,6 @@ const Courses = () => {
                     </h2>
                 </Alert.Heading>
             </Alert>
-           
             <CardGroup>
                 <Card>
                     <Card.Img

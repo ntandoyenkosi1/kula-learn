@@ -55,11 +55,11 @@ const Create = () => {
             title: t,
             description: d,
             image: i,
-            iat: iat,
+            iat: iat
         })
 
         const requestOptions: RequestInit = {
-            method: 'PUT',
+            method: 'POST',
             headers: myHeaders,
             body: raw,
             redirect: 'follow',
@@ -298,7 +298,10 @@ const Create = () => {
             ) : (
                 <></>
             )}
-            <div id="modules-added"></div>
+            {/* <div id="modules-added"></div> */}
+            <div className="container container-center">
+                <div id="modules-added" className="row row-cols-2 row-cols-lg-4 g-2 g-lg-3"></div>
+            </div>
             <Footer />
         </div>
     )

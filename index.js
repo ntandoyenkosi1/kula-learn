@@ -115,11 +115,11 @@ app.post("/modules", async (req, res) => {
 	db.close();
 });
 // delete module
-app.delete("/modules", async (req, res) => {
+app.delete("/api/module", async (req, res) => {
 	const db = new sqlite3.Database("database.db");
 	db.serialize(function () {
 		db.all(
-			`DELETE FROM module WHERE collectionID="${req.body.id}";`,
+			`DELETE FROM module WHERE ID="${req.body.id}";`,
 			function (_err, video) {
 				res.send(video);
 			}
@@ -154,4 +154,4 @@ app.delete("/courses", async (req, res) => {
 	db.close();
 });
 app.listen(4000);
-console.log("Server running");
+console.log("Server running on PORT 4000");

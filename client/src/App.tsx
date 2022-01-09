@@ -7,19 +7,19 @@ import Home from './pages/Home';
 import Create from "./pages/course/Create";
 import Courses from "./pages/course/Courses";
 import Edit from "./pages/course/Edit";
+import EditModule from "./pages/course/EditModule";
 const App=()=> {
   return (
     <div>
       <Router>
         <Routes>
           <Route path="/"  element={<Home />} />
-          {/* <Route path="/course"/> */}
+          <Route path="/courses"  element={<Courses />} />
+          <Route path="/courses/create"  element={<Create />} />
           <Route path="/course/:id" element={<Course />}/>
           <Route path="/course/edit/:id" element={<Edit/>}/>
-          <Route path="/courses"  element={<Courses />} />
-
+          <Route path="/module/:id" element={<EditModule/>}/>
           <Route path="/profile"  element={<Profile />} />
-          <Route path="/courses/create"  element={<Create />} />
         </Routes>
         </Router>
     </div>
