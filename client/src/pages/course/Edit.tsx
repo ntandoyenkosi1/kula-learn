@@ -1,6 +1,8 @@
+import { withAuthenticationRequired } from '@auth0/auth0-react'
 import { useEffect } from 'react'
 import { Alert } from 'react-bootstrap'
 import { useNavigate, useParams } from 'react-router-dom'
+import Loading from '../auth/Loading'
 const Edit = () => {
     const { id } = useParams()
     const navigate = useNavigate()
@@ -119,4 +121,6 @@ const Edit = () => {
     )
 }
 
-export default Edit
+export default withAuthenticationRequired(Edit, {
+    onRedirecting: () => <Loading />,
+});

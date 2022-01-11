@@ -2,6 +2,8 @@ const express = require("express");
 const sqlite3 = require("sqlite3").verbose();
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const https = require('https')
+const http = require('http')
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
@@ -153,5 +155,7 @@ app.delete("/courses", async (req, res) => {
 	});
 	db.close();
 });
-app.listen(4000);
+// app.listen(4000);
+http.createServer(app).listen(4000)
+https.createServer("", app).listen(4001)
 console.log("Server running on PORT 4000");

@@ -1,8 +1,10 @@
 //import { withAuthenticationRequired } from '@auth0/auth0-react'
 //import Loading from '../auth/Loading'
+import { withAuthenticationRequired } from '@auth0/auth0-react'
 import { useEffect } from 'react'
 import { Alert, Card, CardGroup } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
+import Loading from '../auth/Loading'
 import Footer from '../layout/Footer'
 import Navigation from '../layout/Navigation'
 const Courses = () => {
@@ -132,7 +134,6 @@ const Courses = () => {
         </div>
     )
 }
-export default Courses
-// export default withAuthenticationRequired(Courses, {
-//     onRedirecting: () => <Loading />,
-//   });
+export default withAuthenticationRequired(Courses, {
+    onRedirecting: () => <Loading />,
+  });

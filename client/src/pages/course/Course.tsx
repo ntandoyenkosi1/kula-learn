@@ -5,6 +5,7 @@ import Profile from '../auth/Profile'
 import Module from './Module'
 import type ModuleType from '../types'
 import Loading from '../auth/Loading'
+import { withAuthenticationRequired } from '@auth0/auth0-react'
 
 const ModuleData: ModuleType[] =[]
 const Course = () => {
@@ -39,4 +40,6 @@ const Course = () => {
         </>
     )
 }
-export default Course
+export default withAuthenticationRequired(Course, {
+    onRedirecting: () => <Loading />,
+});
