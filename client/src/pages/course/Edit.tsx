@@ -30,7 +30,7 @@ const Edit = () => {
             redirect: 'follow',
         }
 
-        void fetch('http://localhost:4000/api/course/', requestOptions)
+        void fetch('https://kula-learn-server.herokuapp.com/api/course/', requestOptions)
             .then((response) => response.json())
             // .then((result) => {
             //     console.log(result)
@@ -52,7 +52,7 @@ const Edit = () => {
             redirect: 'follow',
         }
 
-        void fetch('http://localhost:4000/api/course/', requestOptions)
+        void fetch('https://kula-learn-server.herokuapp.com/api/course/', requestOptions)
             .then((response) => response.json())
             .then((result) => {
                 const t = document.getElementById('module-title') as HTMLInputElement

@@ -28,7 +28,7 @@ const Login = () => {
             redirect: 'follow',
         }
 
-        void fetch('http://localhost:4000/api/user/get', requestOptions)
+        void fetch('https://kula-learn-server.herokuapp.com/api/user/get', requestOptions)
             .then((response) => response.json())
             .then((result) => {
                 //console.log(result)

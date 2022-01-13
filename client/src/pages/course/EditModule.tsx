@@ -29,7 +29,7 @@ const EditModule = () => {
             body: raw,
             redirect: 'follow',
         }
-        await fetch('http://localhost:4000/api/course/', requestOptions).then((response) =>
+        await fetch('https://kula-learn-server.herokuapp.com/api/course/', requestOptions).then((response) =>
             response.json()
         )
         // .then((result) => {
@@ -53,7 +53,7 @@ const EditModule = () => {
             redirect: 'follow',
         }
 
-        void fetch('http://localhost:4000/api/course/', requestOptions)
+        void fetch('https://kula-learn-server.herokuapp.com/api/course/', requestOptions)
             .then((response) => response.json())
             .then((result) => {
                 // console.log(result)
@@ -71,7 +71,7 @@ const EditModule = () => {
                     redirect: 'follow',
                 }
 
-                void fetch('http://localhost:4000/modules/', requestOptions)
+                void fetch('https://kula-learn-server.herokuapp.com/modules/', requestOptions)
                     .then((response) => response.json())
                     .then((result) => {
                         // console.log(result)
@@ -108,7 +108,7 @@ const EditModule = () => {
                                     redirect: 'follow',
                                 }
 
-                                void fetch('http://localhost:4000/api/module', requestOptions).then(
+                                void fetch('https://kula-learn-server.herokuapp.com/api/module', requestOptions).then(
                                     (response) => response.text()
                                 )
                                 //.then(result => {/*console.log(result)*/})

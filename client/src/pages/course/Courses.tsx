@@ -35,7 +35,7 @@ const Courses = () => {
             method: 'GET',
             redirect: 'follow',
         }
-        void fetch('http://localhost:4000/courses/', requestOptions)
+        void fetch('https://kula-learn-server.herokuapp.com/courses/', requestOptions)
             .then((response) => response.json())
             .then((result) => {
                 ///console.log(result)
@@ -87,7 +87,7 @@ const Courses = () => {
                             redirect: 'follow',
                         }
 
-                        void fetch('http://localhost:4000/courses/', requestOptions).then(
+                        void fetch('https://kula-learn-server.herokuapp.com/courses/', requestOptions).then(
                             (response) => response.json()
                         )
                         // .then((result) => {

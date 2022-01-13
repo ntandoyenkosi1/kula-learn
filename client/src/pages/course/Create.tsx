@@ -64,7 +64,7 @@ const Create = () => {
             body: raw,
             redirect: 'follow',
         }
-        await fetch('http://localhost:4000/course/', requestOptions)
+        await fetch('https://kula-learn-server.herokuapp.com/course/', requestOptions)
             .then((response) => response.json())
             .then((result) => {
                 setCourse(result)
@@ -97,7 +97,7 @@ const Create = () => {
             body: raw,
             redirect: 'follow',
         }
-        await fetch('http://localhost:4000/module/', requestOptions)
+        await fetch('https://kula-learn-server.herokuapp.com/module/', requestOptions)
             .then((response) => response.json())
             .then((result) => {
                 moduleList?.push(result)

@@ -30,5 +30,4 @@ cd client
 npm start
 ```
 **Note**
-The client is also deployed on Netlify at https://dazzling-tesla-9dc29c.netlify.app/. The client will not work as intended since the server is not yet deployed.
-To make it work, run the server at PORT 4000, then it will work as intended with appropriate data,
+The client is also deployed on Netlify at https://dazzling-tesla-9dc29c.netlify.app/.
