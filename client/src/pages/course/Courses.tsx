@@ -1,14 +1,35 @@
 //import { withAuthenticationRequired } from '@auth0/auth0-react'
 //import Loading from '../auth/Loading'
-import { withAuthenticationRequired } from '@auth0/auth0-react'
-import { useEffect } from 'react'
+// import { withAuthenticationRequired } from '@auth0/auth0-react'
+import { useEffect, useState } from 'react'
 import { Alert, Card, CardGroup } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
-import Loading from '../auth/Loading'
+//import Loading from '../auth/Loading'
 import Footer from '../layout/Footer'
 import Navigation from '../layout/Navigation'
+interface User {
+    firstName: string
+    lastName: string
+    email: string
+    role: string
+    createdAt: string
+}
 const Courses = () => {
     const navigate = useNavigate()
+    const [isAuthenticated, setAuth] = useState(false)
+    const [user, setUser] = useState<User>()
+    useEffect(() => {
+        //
+        const person = JSON.parse(sessionStorage!.getItem('user')!)
+        try {
+            setUser(person[0])
+            if (user == null) {
+                setAuth(false)
+            }
+        } catch {
+            setAuth(true)
+        }
+    }, [isAuthenticated])
     useEffect(() => {
         const requestOptions: RequestInit = {
             method: 'GET',
@@ -76,14 +97,19 @@ const Courses = () => {
                     }
                     del.innerText = 'Delete'
                     del.className = 'btn btn-primary'
-                    buttonWrapper.append(preview)
+                    //buttonWrapper.append(preview)
                     buttonWrapper.append(enrol)
-                    buttonWrapper.append(del)
-                    buttonWrapper.append(edit)
+                    if (user?.role == 'instructor') {
+                        buttonWrapper.append(del)
+                        buttonWrapper.append(edit)
+                    } else {
+                        //
+                    }
                     wrapper.append(heading)
                     wrapper.append(image)
                     wrapper.append(paragraph)
                     wrapper.append(buttonWrapper)
+                    wrapper.style.marginRight = '20px'
                     existing!.append(wrapper)
                     wrapper!.onclick = () => {
                         /*console.log(res.title)*/
@@ -112,28 +138,51 @@ const Courses = () => {
                     </h2>
                 </Alert.Heading>
             </Alert>
-            <CardGroup>
-                <Card>
-                    <Card.Img
-                        className="img-decoration rounded mx-auto d-block"
-                        variant="top"
-                        src="https://i.ibb.co/ZBYYGj0/course.png"
-                    />
-                    <Card.Body>
-                        <Card.Title className="align-center">Browse</Card.Title>
-                        <Card.Text className="align-center">
-                            <p>We offer beginner and more advanced courses.</p>
-                        </Card.Text>
-                    </Card.Body>
-                </Card>
-            </CardGroup>
-            <div className="container">
-                <div id="cards-li" className="row row-cols-2 row-cols-lg-4 g-2 g-lg-3"></div>
+            <div className="page-home shadow p-3 mb-5 bg-body rounded">
+                <CardGroup>
+                    <Card>
+                        <Card.Img
+                            className="img-decoration rounded mx-auto d-block"
+                            variant="top"
+                            src="https://i.ibb.co/ZBYYGj0/course.png"
+                        />
+                        <Card.Body>
+                            <Card.Title className="align-center">Browse</Card.Title>
+                            <Card.Text className="align-center">
+                                <p>We offer beginner and more advanced courses.</p>
+                                {user == null ? (
+                                    <></>
+                                ) : (
+                                    <>
+                                        {user.role == 'instructor' ? (
+                                            <>
+                                                <button
+                                                    className="btn btn-primary wide wider"
+                                                    onClick={() => navigate('/courses/create')}
+                                                >
+                                                    Create New Course
+                                                </button>
+                                            </>
+                                        ) : (
+                                            <></>
+                                        )}
+                                    </>
+                                )}
+                            </Card.Text>
+                        </Card.Body>
+                    </Card>
+                </CardGroup>
+                <div className=" left">
+                    <p>
+                        <div
+                            id="cards-li"
+                            className="row row-cols-2 row-cols-lg-4 g-2 g-lg-3"
+                        ></div>
+                    </p>
+                </div>
             </div>
             <Footer />
         </div>
     )
 }
-export default withAuthenticationRequired(Courses, {
-    onRedirecting: () => <Loading />,
-  });
+export default Courses

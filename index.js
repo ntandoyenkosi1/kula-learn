@@ -155,6 +155,30 @@ app.delete("/courses", async (req, res) => {
 	});
 	db.close();
 });
+app.post("/api/user", (req, res)=>{
+	const db = new sqlite3.Database("database.db");
+	db.serialize(function () {
+		const id = generateUUID();
+		const iat = Math.round(new Date().getTime() / 1000);
+		db.run(
+			`INSERT INTO users VALUES ("${id}", "${req.body.firstName}", "${req.body.lastName}", "${req.body.email}", "${req.body.password}","student", ${iat})`
+		);
+	});
+	db.close();
+	res.send(req.body);
+})
+app.post("/api/user/get", (req, res)=>{
+	const db = new sqlite3.Database("database.db");
+	db.serialize(function () {
+		db.all(
+			`SELECT firstName, lastName, email, createdAt, role FROM users WHERE email="${req.body.email}";`,
+			function (_err, video) {
+				res.send(video);
+			}
+		);
+	});
+	db.close();
+})
 // app.listen(4000);
 http.createServer(app).listen(4000)
 https.createServer("", app).listen(4001)

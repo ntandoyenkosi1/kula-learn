@@ -1,10 +1,10 @@
-import { withAuthenticationRequired } from '@auth0/auth0-react'
+//import { withAuthenticationRequired } from '@auth0/auth0-react'
 import { Alert, Modal, Button } from 'react-bootstrap'
 import { useState } from 'react'
 import Footer from '../layout/Footer'
 import Main from '../layout/Main'
 import Courses from './Courses'
-import Loading from '../auth/Loading'
+//import Loading from '../auth/Loading'
 interface Courses {
     collectionID: string
     title: string
@@ -55,7 +55,7 @@ const Create = () => {
             title: t,
             description: d,
             image: i,
-            iat: iat
+            iat: iat,
         })
 
         const requestOptions: RequestInit = {
@@ -222,90 +222,99 @@ const Create = () => {
                     </h1>
                 </Alert.Heading>
             </Alert>
-            {courseToggled ? (
-                <>
-                    <h3>In progress</h3>
-                    <h6>Course Title: {course?.title}</h6>
-                    <h6>Course Description: {course?.description}</h6>
-                    <img
-                        className="rounded mx-auto d-block"
-                        src={course?.image}
-                        width={100}
-                        height={100}
-                    />
-                    <hr />
-                </>
-            ) : (
-                <>
-                    <div className="input-group mb-3">
-                        <input
-                            type="text"
-                            id="course-title"
-                            required
-                            maxLength={50}
-                            className="form-control"
-                            placeholder="Enter course title"
+            <div className="page-course shadow p-3 mb-5 bg-body rounded">
+                {courseToggled ? (
+                    <>
+                        <h3>In progress</h3>
+                        <h6>Course Title: {course?.title}</h6>
+                        <h6>Course Description: {course?.description}</h6>
+                        <img
+                            className="rounded mx-auto d-block"
+                            src={course?.image}
+                            width={100}
+                            height={100}
                         />
-                    </div>
-                    <div className="input-group mb-3">
-                        <input
-                            type="text"
-                            id="course-description"
-                            required
-                            maxLength={200}
-                            className="form-control"
-                            placeholder="Enter short description"
-                        />
-                    </div>
-                    <div className="input-group mb-3">
-                        <input
-                            type="text"
-                            id="course-link"
-                            maxLength={50}
-                            required
-                            className="form-control"
-                            placeholder="Enter a thumbnail link here for the course"
-                        />
-                    </div>
-                    <button className="btn btn-success" onClick={handleAddCourse}>
-                        Save
-                    </button>
-                </>
-            )}
-            {courseToggled ? (
-                <>
-                    <h2>Add a module</h2>
-                    <hr />
-                    <button className="btn btn-success center" onClick={() => setModalShow(true)}>
-                        Click here to add a new module
-                    </button>
-                    <hr />
-                </>
-            ) : (
-                <div></div>
-            )}
-            {courseToggled ? (
-                <>
-                    <ModuleModal show={modalShow} onHide={() => setModalShow(false)} />
-                </>
-            ) : (
-                <div></div>
-            )}
-            {moduleToggled ? (
-                <>
-                    <h4>Added modules</h4>
-                </>
-            ) : (
-                <></>
-            )}
-            {/* <div id="modules-added"></div> */}
-            <div className="container container-center">
-                <div id="modules-added" className="row row-cols-2 row-cols-lg-4 g-2 g-lg-3"></div>
+                        <hr />
+                    </>
+                ) : (
+                    <>
+                        <h3>Course Information</h3>
+                        <div className="input-group mb-3">
+                            <input
+                                type="text"
+                                id="course-title"
+                                required
+                                maxLength={50}
+                                className="form-control"
+                                placeholder="Enter course title"
+                            />
+                        </div>
+                        <div className="input-group mb-3">
+                            <input
+                                type="text"
+                                id="course-description"
+                                required
+                                maxLength={200}
+                                className="form-control"
+                                placeholder="Enter short description"
+                            />
+                        </div>
+                        <div className="input-group mb-3">
+                            <input
+                                type="text"
+                                id="course-link"
+                                maxLength={50}
+                                required
+                                className="form-control"
+                                placeholder="Enter a thumbnail link here for the course"
+                            />
+                        </div>
+                        <p>
+                            <button className="btn btn-success wide" onClick={handleAddCourse}>
+                                Save
+                            </button>
+                        </p>
+                    </>
+                )}
+                {courseToggled ? (
+                    <>
+                        <h2>Add a module</h2>
+                        <hr />
+                        <button
+                            className="btn btn-success center"
+                            onClick={() => setModalShow(true)}
+                        >
+                            Click here to add a new module
+                        </button>
+                        <hr />
+                    </>
+                ) : (
+                    <div></div>
+                )}
+                {courseToggled ? (
+                    <>
+                        <ModuleModal show={modalShow} onHide={() => setModalShow(false)} />
+                    </>
+                ) : (
+                    <div></div>
+                )}
+                {moduleToggled ? (
+                    <>
+                        <h4>Added modules</h4>
+                    </>
+                ) : (
+                    <></>
+                )}
+                {/* <div id="modules-added"></div> */}
+                <div className="container container-center">
+                    <div
+                        id="modules-added"
+                        className="row row-cols-2 row-cols-lg-4 g-2 g-lg-3"
+                    ></div>
+                </div>
             </div>
             <Footer />
         </div>
     )
 }
-export default withAuthenticationRequired(Create, {
-    onRedirecting: () => <Loading />,
-})
+export default Create

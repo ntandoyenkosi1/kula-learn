@@ -8,6 +8,8 @@ import Create from "./pages/course/Create";
 import Courses from "./pages/course/Courses";
 import Edit from "./pages/course/Edit";
 import EditModule from "./pages/course/EditModule";
+import Register from "./pages/auth/Register";
+import Login from "./pages/auth/Login";
 const App=()=> {
   return (
     <div>
@@ -20,6 +22,8 @@ const App=()=> {
           <Route path="/course/edit/:id" element={<Edit/>}/>
           <Route path="/module/:id" element={<EditModule/>}/>
           <Route path="/profile"  element={<Profile />} />
+          <Route path="/register" element={<Register/>}/>
+          <Route path="/login" element={<Login/>}/>
         </Routes>
         </Router>
     </div>

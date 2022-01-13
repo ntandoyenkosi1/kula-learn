@@ -40,11 +40,40 @@ h6 {
     text-align: center;
     font-weight: bold;
 }
-p, label{
+p,
+label {
     font-family: 'Open Sans', sans-serif;
     text-align: center;
 }
-.textarea{
+.page {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.wide {
+    min-width: 25px;
+}
+.left {
+    margin-left: 100px;
+}
+@media only screen and (min-width: 676px) {
+    .wide {
+        min-width: 250px;
+    }
+    .page {
+        margin-left: 200px;
+        margin-right: 200px;
+        margin-top: 50px;
+    }
+    .page-home {
+        margin-left: 100px;
+        margin-right: 100px;
+    }
+    .page-course {
+        margin-left: 50px;
+        margin-right: 50px;
+    }
+}
+.textarea {
     max-width: 1370px;
     max-height: 500px;
 }
@@ -52,12 +81,12 @@ p, label{
 .center {
     position: relative;
     left: 40%;
-  }
+}
 .custom-btn:hover {
     background-color: aquamarine;
 }
 .sidebar-btn:hover {
-    background-color: #CFE2FF;
+    background-color: #cfe2ff;
 }
 .sidebar-btn::after {
     background-color: aquamarine;

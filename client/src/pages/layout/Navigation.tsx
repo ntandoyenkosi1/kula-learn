@@ -1,11 +1,23 @@
 import { Navbar } from 'react-bootstrap'
 import LogoutButton from '../auth/LogoutButton'
 import LoginButton from '../auth/LoginButton'
-import { useAuth0 } from '@auth0/auth0-react'
+//import { useAuth0 } from '@auth0/auth0-react'
 import { useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 const Navigation = () => {
-    const { isAuthenticated } = useAuth0()
-    const navigate=useNavigate()
+    //const { isAuthenticated } = useAuth0()
+    const [isAuthenticated, setAuth] = useState(false)
+    const navigate = useNavigate()
+    useEffect(() => {
+        //
+        const user = JSON.parse(sessionStorage!.getItem('user')!)
+        //console.log(user)
+        if (user == null) {
+            setAuth(false)
+        } else {
+            setAuth(true)
+        }
+    }, [isAuthenticated])
     if (isAuthenticated) {
         return (
             <div>
@@ -14,13 +26,14 @@ const Navigation = () => {
                  */}
                 <Navbar>
                     <Navbar.Brand>
-                        <h1 onClick={()=>navigate("/")} style={{ color: 'white' }}>Kula Learn</h1>
+                        <h1 onClick={() => navigate('/')} style={{ color: 'white' }}>
+                            Kula Learn
+                        </h1>
                     </Navbar.Brand>
                     <Navbar.Toggle />
                     <Navbar.Collapse className="justify-content-end">
                         <Navbar.Text>
                             <a
-                                href="#home"
                                 className="button text-center fs-5 w3-large"
                                 style={{ color: 'white' }}
                             >
@@ -40,7 +53,7 @@ const Navigation = () => {
                         alt="logo"
                         className="rounded mx-auto d-block"
                         style={{ width: '90px', height: '90px' }}
-                        onClick={()=>navigate("/")}
+                        onClick={() => navigate('/')}
                     />
                     <Navbar.Brand>
                         <h1 style={{ color: 'white' }}>Kula Learn</h1>
@@ -49,7 +62,6 @@ const Navigation = () => {
                     <Navbar.Collapse className="justify-content-end">
                         <Navbar.Text>
                             <a
-                                href="#home"
                                 className="button text-center fs-5 w3-large"
                                 style={{ color: 'white' }}
                             >
