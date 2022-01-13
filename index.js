@@ -7,6 +7,7 @@ const http = require('http')
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
+const PORT = process.env.PORT || 4000
 function generateUUID() {
 	// Public Domain/MIT
 	let d = new Date().getTime(); //Timestamp
@@ -180,6 +181,6 @@ app.post("/api/user/get", (req, res)=>{
 	db.close();
 })
 // app.listen(4000);
-http.createServer(app).listen(4000)
-https.createServer("", app).listen(4001)
-console.log("Server running on PORT 4000");
+http.createServer(app).listen(PORT)
+https.createServer("", app).listen(PORT+1)
+console.log("Server running on PORT "+PORT);
