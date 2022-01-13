@@ -182,5 +182,4 @@ app.post("/api/user/get", (req, res)=>{
 })
 // app.listen(4000);
 http.createServer(app).listen(PORT)
-https.createServer("", app).listen(PORT+1)
 console.log("Server running on PORT "+PORT);
