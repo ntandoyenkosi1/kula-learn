@@ -4,10 +4,12 @@
 import { useEffect, useState } from 'react'
 import { Alert, Card, CardGroup } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
+import Loading from '../auth/Loading'
 //import Loading from '../auth/Loading'
 import Footer from '../layout/Footer'
 import Navigation from '../layout/Navigation'
 interface User {
+    ID:string,
     firstName: string
     lastName: string
     email: string
@@ -39,9 +41,12 @@ const Courses = () => {
             .then((response) => response.json())
             .then((result) => {
                 ///console.log(result)
+                let existing = document.getElementById('cards-li')
+                existing!.innerHTML=""
+                existing!.className="row row-cols-2 row-cols-lg-4 g-2 g-lg-3"
                 result.forEach((res: any) => {
                     //
-                    const existing = document.getElementById('cards-li')
+                    existing = document.getElementById('cards-li')
                     const wrapper = document.createElement('div')
                     const heading = document.createElement('h3')
                     const paragraph = document.createElement('p')
@@ -69,6 +74,27 @@ const Courses = () => {
                         navigate(`/course/edit/${res.ID}`)
                     }
                     enrol.onclick = () => {
+                        //Make an API call to update a course you are now enrolled in
+                        const myHeaders = new Headers();
+                        myHeaders.append("Content-Type", "application/json");
+                        //console.log(user)
+                        const raw = JSON.stringify({
+                        "userID": user?.ID,
+                        "courseID": "courseID"
+                        });
+
+                        const requestOptions:RequestInit = {
+                        method: 'POST',
+                        headers: myHeaders,
+                        body: raw,
+                        redirect: 'follow'
+                        };
+
+                        void fetch("https://kula-learn-server.herokuapp.com/api/enrol", requestOptions)
+                        .then(response => response.text())
+                        .then(() => {
+                            //console.log(result)
+                        })
                         navigate(`/course/${res.collectionID}`)
                     }
                     del.onclick = () => {
@@ -151,7 +177,15 @@ const Courses = () => {
                             <Card.Text className="align-center">
                                 <p>We offer beginner and more advanced courses.</p>
                                 {user == null ? (
-                                    <></>
+                                    <>                   <Card>
+                                    <Card.Title className="align-center">
+                                        <b>Courses You Are Enrolled In</b>
+                                    </Card.Title>
+                                    <Card.Body className="align-center">
+                                        You are not currently enrolled in any courses.
+                                        Enrol in a course below
+                                    </Card.Body>
+                                </Card></>
                                 ) : (
                                     <>
                                         {user.role == 'instructor' ? (
@@ -172,12 +206,14 @@ const Courses = () => {
                         </Card.Body>
                     </Card>
                 </CardGroup>
-                <div className=" left">
+                <div className="left">
                     <p>
                         <div
                             id="cards-li"
-                            className="row row-cols-2 row-cols-lg-4 g-2 g-lg-3"
-                        ></div>
+                            style={{textAlign:'center'}}
+                        >
+                            <Loading/>
+                        </div>
                     </p>
                 </div>
             </div>

@@ -120,13 +120,13 @@ const Module = (props: any) => {
                                         <h2>Video</h2>
                                     </Accordion.Header>
                                     <Accordion.Body>
-                                        <div></div>
+                                        <div style={{textAlign:'center'}}>
                                         <video
                                             src={video}
-                                            style={{ width: '99%' }}
                                             autoPlay={false}
                                             controls={true}
-                                        />
+                                            style={{ width: '99%' }}/>
+                                            </div>
                                     </Accordion.Body>
                                 </Accordion.Item>
                                 <Accordion.Item eventKey="2" style={{ width: '99%' }}>
@@ -145,7 +145,7 @@ const Module = (props: any) => {
                 ) : (
                     <>
                         <div className="page-course shadow p-3 mb-5 bg-body rounded">
-                            <h3>Select a chapter</h3>
+                        <h1>A selected chapter will appear below</h1>
                             <Loading />
                         </div>
                     </>

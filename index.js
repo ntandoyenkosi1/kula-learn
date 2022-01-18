@@ -172,7 +172,7 @@ app.post("/api/user/get", (req, res)=>{
 	const db = new sqlite3.Database("database.db");
 	db.serialize(function () {
 		db.all(
-			`SELECT firstName, lastName, email, createdAt, role FROM users WHERE email="${req.body.email}";`,
+			`SELECT ID,firstName, lastName, email, createdAt, role FROM users WHERE email="${req.body.email}";`,
 			function (_err, video) {
 				res.send(video);
 			}
@@ -180,6 +180,33 @@ app.post("/api/user/get", (req, res)=>{
 	});
 	db.close();
 })
-// app.listen(4000);
+app.post("/api/enrol", (req, res)=>{
+	const db = new sqlite3.Database("database.db");
+	db.serialize(function () {
+		const id = generateUUID();
+		const iat = Math.round(new Date().getTime() / 1000);
+		progress=0
+		db.run(
+			`INSERT INTO userCourse VALUES ("${id}", "${req.body.userID}", "${req.body.courseID}", "${progress}", ${iat})`
+		);
+	});
+	db.close();
+	res.send(req.body);
+})
+app.get("/api/enrol", (req, res)=>{
+	const db = new sqlite3.Database("database.db");
+	db.serialize(function () {
+		const id = generateUUID();
+		const iat = Math.round(new Date().getTime() / 1000);
+		progress=0
+		db.all(
+			`SELECT * FROM userCourse where userID="${req.body.userID}"`, function(err, result){
+				res.send(result)
+			}
+		);
+	});
+	db.close();
+	//res.send(req.body);
+})
 http.createServer(app).listen(PORT)
 console.log("Server running on PORT "+PORT);

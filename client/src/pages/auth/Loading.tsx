@@ -1,4 +1,4 @@
-import loading from "../assets/loading.gif"
+import loading from "../assets/dual.gif"
 const Loading=()=>{
     return <div>
         <img className="rounded mx-auto d-block loading" alt="" src={loading}/>
