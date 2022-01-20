@@ -10,9 +10,11 @@ import Edit from "./pages/course/Edit";
 import EditModule from "./pages/course/EditModule";
 import Register from "./pages/auth/Register";
 import Login from "./pages/auth/Login";
+import Development from "./pages/layout/Development";
 const App=()=> {
   return (
     <div>
+      <Development/>
       <Router>
         <Routes>
           <Route path="/"  element={<Home />} />
