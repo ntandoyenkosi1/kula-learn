@@ -33,7 +33,7 @@ const EditModule = () => {
         //     response.json()
         // )
         //#endregion
-        callApi('api/course/', 'PUT', true, raw)
+        await callApi('api/course/', 'PUT', true, raw)
         setModalShow(false)
     }
     useEffect(() => {
