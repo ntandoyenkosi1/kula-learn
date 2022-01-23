@@ -56,7 +56,7 @@ app.get("/courses/", async (_req, res) => {
 		db.close();
 	});
 });
-//GET 1 courses
+//GET 1 course by
 app.post("/api/course", async (req, res) => {
 	const db = new sqlite3.Database("database.db");
 	db.serialize(function () {
@@ -66,6 +66,18 @@ app.post("/api/course", async (req, res) => {
 		db.close();
 	});
 });
+// Get 1 course by collectionID
+app.post("/api/course/get", (req, res)=>{
+	const db = new sqlite3.Database("database.db");
+	db.serialize(function () {
+		db.all(
+			`SELECT * FROM course WHERE collectionID="${req.body.id}";`, (err, respo)=>{
+				res.send(respo)
+			}
+		);
+	});
+	db.close();
+})
 //Update course
 app.put("/api/course", async (req, res) => {
 	const db = new sqlite3.Database("database.db");
@@ -193,20 +205,33 @@ app.post("/api/enrol", (req, res)=>{
 	db.close();
 	res.send(req.body);
 })
-app.get("/api/enrol", (req, res)=>{
+app.put("/api/enrol", (req, res)=>{
 	const db = new sqlite3.Database("database.db");
+	list=[]
+	list1=[]
+	id=""
 	db.serialize(function () {
-		const id = generateUUID();
-		const iat = Math.round(new Date().getTime() / 1000);
-		progress=0
-		db.all(
-			`SELECT * FROM userCourse where userID="${req.body.userID}"`, function(err, result){
-				res.send(result)
+		db.each(
+			`SELECT * FROM userCourse  WHERE userID="${req.body.userID}";`, (err, rs)=>{
+				list.push(rs.courseID)
 			}
-		);
+		)
+		db.all(`SELECT * FROM course where collectionID="c9baa837-b503-4a08-804b-b318ad7ee7d7"`, (e, r)=>{
+			//list.push(r)
+			res.send(list)
+		})
+		// for(var i=0;i<list.length;i++){
+		// 	db.each(`SELECT * FROM course WHERE collectionID="${list[i]}";`, (error, respo)=>{
+		// 		list1.push(respo)
+		// 	})
+		// }
+		// db.all(`SELECT * FROM course where collectionID="c9baa837-b503-4a08-804b-b318ad7ee7d7"`, (e, r)=>{
+		// 	console.log(list1)
+		// })
+		//console.log(list);
 	});
+	//res.sendStatus(200)
 	db.close();
-	//res.send(req.body);
 })
 http.createServer(app).listen(PORT)
 console.log("Server running on PORT "+PORT);

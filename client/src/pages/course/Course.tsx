@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import Profile from '../auth/Profile'
 import Module from './Module'
-import type ModuleType from '../types'
+import {ModuleType} from '../types'
 import Loading from '../auth/Loading'
 //import { withAuthenticationRequired } from '@auth0/auth0-react'
 

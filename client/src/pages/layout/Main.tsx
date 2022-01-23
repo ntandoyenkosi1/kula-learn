@@ -1,6 +1,3 @@
-//import React from "react";
-//import SideBar from "./SideBar";
-//import { CourseType } from "../pages/types";
 import Navigation from './Navigation'
 const Main = (props: any) => {
     function w3_open() {

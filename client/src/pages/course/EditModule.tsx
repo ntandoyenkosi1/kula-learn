@@ -1,9 +1,8 @@
-//import { withAuthenticationRequired } from '@auth0/auth0-react'
 import { useEffect, useState } from 'react'
 import { Alert, Button, Modal } from 'react-bootstrap'
 import { useParams } from 'react-router-dom'
-//import Loading from '../auth/Loading'
 import Navigation from '../layout/Navigation'
+import { callApi } from '../helpers'
 const EditModule = () => {
     const { id } = useParams()
     const [moduleData, setModuleData] = useState()
@@ -14,8 +13,8 @@ const EditModule = () => {
         const d = (document.getElementById('video-short') as HTMLInputElement).value
         //const l = (document.getElementById('video-long') as HTMLInputElement).value
         const i = (document.getElementById('video-link') as HTMLInputElement).value
-        const myHeaders = new Headers()
-        myHeaders.append('Content-Type', 'application/json')
+        // const myHeaders = new Headers()
+        // myHeaders.append('Content-Type', 'application/json')
 
         const raw = JSON.stringify({
             id: id,
@@ -23,18 +22,18 @@ const EditModule = () => {
             shortDescription: d,
             image: i,
         })
-        const requestOptions: RequestInit = {
-            method: 'PUT',
-            headers: myHeaders,
-            body: raw,
-            redirect: 'follow',
-        }
-        await fetch('https://kula-learn-server.herokuapp.com/api/course/', requestOptions).then((response) =>
-            response.json()
-        )
-        // .then((result) => {
-        //     // console.log(result)
-        // })
+        //#region previous request
+        // const requestOptions: RequestInit = {
+        //     method: 'PUT',
+        //     headers: myHeaders,
+        //     body: raw,
+        //     redirect: 'follow',
+        // }
+        // await fetch('https://kula-learn-server.herokuapp.com/api/course/', requestOptions).then((response) =>
+        //     response.json()
+        // )
+        //#endregion
+        callApi('api/course/', 'PUT', true, raw)
         setModalShow(false)
     }
     useEffect(() => {

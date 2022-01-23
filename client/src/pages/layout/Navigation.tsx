@@ -1,17 +1,13 @@
 import { Navbar } from 'react-bootstrap'
 import LogoutButton from '../auth/LogoutButton'
 import LoginButton from '../auth/LoginButton'
-//import { useAuth0 } from '@auth0/auth0-react'
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 const Navigation = () => {
-    //const { isAuthenticated } = useAuth0()
     const [isAuthenticated, setAuth] = useState(false)
     const navigate = useNavigate()
     useEffect(() => {
-        //
         const user = JSON.parse(sessionStorage!.getItem('user')!)
-        //console.log(user)
         if (user == null) {
             setAuth(false)
         } else {
