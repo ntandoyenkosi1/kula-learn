@@ -27,7 +27,7 @@ const Course = () => {
             redirect: 'follow',
         }
 
-        void fetch('http://localhost:4000/modules/', requestOptions)
+        void fetch('https://kula-learn-server.herokuapp.com/modules/', requestOptions)
             .then((response) => response.json())
             .then((result) => {
                 setModuleData(result)
