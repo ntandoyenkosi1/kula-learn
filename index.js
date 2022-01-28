@@ -208,8 +208,6 @@ app.post("/api/enrol", (req, res)=>{
 app.put("/api/enrol", (req, res)=>{
 	const db = new sqlite3.Database("database.db");
 	list=[]
-	list1=[]
-	id=""
 	db.serialize(function () {
 		db.each(
 			`SELECT * FROM userCourse  WHERE userID="${req.body.userID}";`, (err, rs)=>{
@@ -217,20 +215,21 @@ app.put("/api/enrol", (req, res)=>{
 			}
 		)
 		db.all(`SELECT * FROM course where collectionID="c9baa837-b503-4a08-804b-b318ad7ee7d7"`, (e, r)=>{
-			//list.push(r)
 			res.send(list)
 		})
-		// for(var i=0;i<list.length;i++){
-		// 	db.each(`SELECT * FROM course WHERE collectionID="${list[i]}";`, (error, respo)=>{
-		// 		list1.push(respo)
-		// 	})
-		// }
-		// db.all(`SELECT * FROM course where collectionID="c9baa837-b503-4a08-804b-b318ad7ee7d7"`, (e, r)=>{
-		// 	console.log(list1)
-		// })
-		//console.log(list);
 	});
-	//res.sendStatus(200)
+	db.close();
+})
+// ****************Users********************** //
+app.get('/users', (err, res)=>{
+	const db = new sqlite3.Database("database.db");
+	db.serialize(function () {
+		db.all(
+			`SELECT * FROM users";`, (_er, rs)=>{
+				res.send(rs)
+			}
+		)
+	});
 	db.close();
 })
 http.createServer(app).listen(PORT)

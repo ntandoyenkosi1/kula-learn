@@ -2,7 +2,28 @@ import { Alert, Card, CardGroup } from 'react-bootstrap'
 import Footer from './layout/Footer'
 import Main from './layout/Main'
 import { useNavigate } from 'react-router-dom'
+//import Example from "./example.mdx"
+// import remarkGfm from 'remark-gfm'
+// import ReactMarkdown from 'react-markdown'
 const Home = () => {
+//     const markdown = `A paragraph with *emphasis* and **strong importance**.
+
+// > A block quote with ~strikethrough~ and a URL: https://reactjs.org.
+
+// * Lists
+// * [ ] todo
+// * [x] done
+
+// A table:
+
+// | a | b |
+// | - | - |
+// \`\`\`
+//     python -m Http.server
+//     node server.js
+//     node server.js
+// \`\`\`
+// `
     const navigate = useNavigate()
     return (
         <div>
@@ -14,6 +35,9 @@ const Home = () => {
                     </h2>
                 </Alert.Heading>
             </Alert>
+            {/* <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                {markdown}
+            </ReactMarkdown> */}
             <div className="page-home shadow p-3 mb-5 bg-body rounded">
                 <p>
                     Use this platform to learn a new skill. Register a new account or login to gain

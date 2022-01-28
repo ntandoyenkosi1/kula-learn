@@ -2,9 +2,10 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import Profile from '../auth/Profile'
-import Module from './Module'
+//import Module from './Module'
 import {ModuleType} from '../types'
 import Loading from '../auth/Loading'
+import ModuleView from '../module/ViewModule'
 //import { withAuthenticationRequired } from '@auth0/auth0-react'
 
 const ModuleData: ModuleType[] = []
@@ -26,7 +27,7 @@ const Course = () => {
             redirect: 'follow',
         }
 
-        void fetch('https://kula-learn-server.herokuapp.com/modules/', requestOptions)
+        void fetch('http://localhost:4000/modules/', requestOptions)
             .then((response) => response.json())
             .then((result) => {
                 setModuleData(result)
@@ -40,7 +41,7 @@ const Course = () => {
                 </>
             ) : (
                 <>
-                    <Module data={moduleData} />
+                    <ModuleView data={moduleData} />
                     <div>{Profile}</div>
                 </>
             )}
