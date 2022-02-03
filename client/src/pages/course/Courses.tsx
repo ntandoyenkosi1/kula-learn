@@ -53,7 +53,7 @@ const Courses = () => {
                     existing!.className = 'flexbox-container'
                     result.forEach((res: any) => {
                         //
-                        console.log(result)
+                        //console.log(result)
                         existing = document.getElementById('cards-li')
                         const wrapper = document.createElement('div')
                         const heading = document.createElement('h3')
