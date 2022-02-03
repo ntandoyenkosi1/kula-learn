@@ -1,30 +1,17 @@
-//import { withAuthenticationRequired } from '@auth0/auth0-react'
-//import Loading from '../auth/Loading'
-// import { withAuthenticationRequired } from '@auth0/auth0-react'
 import { useEffect, useState } from 'react'
 import { Alert, Card, CardGroup } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
-//import Loading from '../auth/Loading'
 import { callApi } from '../helpers'
-//import Loading from '../auth/Loading'
 import Footer from '../layout/Footer'
 import Navigation from '../layout/Navigation'
-
-interface User {
-    ID: string
-    firstName: string
-    lastName: string
-    email: string
-    role: string
-    createdAt: string
-}
-interface Course {
-    ID: string
-    title: string
-}
+import { Course, User } from '../types'
+// interface Course {
+//     ID: string
+//     title: string
+// }
 const Courses = () => {
     const navigate = useNavigate()
-    const [isAuthenticated, setAuth] = useState(false)
+    const [isAuthenticated, setAuth] = useState(true)
     const [user, setUser] = useState<User>()
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [enrolledCourses, setEnrolledCourses] = useState<Course>()
@@ -32,7 +19,7 @@ const Courses = () => {
         //
         const person = JSON.parse(sessionStorage!.getItem('user')!)
         try {
-            setUser(person[0])
+            setUser(person.user[0])
             if (person[0] != null) {
                 setAuth(true)
             } else {
@@ -44,20 +31,29 @@ const Courses = () => {
     }, [isAuthenticated])
     useEffect(() => {
         if (user) {
+            const myHeaders = new Headers()
+            //console.log(sessionStorage.getItem("token"))
+            myHeaders.append("x-auth-token", sessionStorage.getItem("token")!);
             const requestOptions: RequestInit = {
                 method: 'GET',
                 redirect: 'follow',
+                headers:myHeaders
             }
-            void fetch('https://kula-learn-server.herokuapp.com/courses/', requestOptions)
+            void fetch('http://localhost:4000/courses/', requestOptions)
                 .then((response) => response.json())
                 .then((result) => {
-                    ///console.log(result)
+                    //console.log("Result:", result)
+                    if(result.ok==false){
+                        navigate('/login')
+                        return
+                    }
                     let existing = document.getElementById('cards-li')
                     existing!.innerHTML = ''
                     // existing!.className="row row-cols-2 row-cols-lg-4 g-2 g-lg-3"
                     existing!.className = 'flexbox-container'
                     result.forEach((res: any) => {
                         //
+                        console.log(result)
                         existing = document.getElementById('cards-li')
                         const wrapper = document.createElement('div')
                         const heading = document.createElement('h3')
@@ -68,6 +64,8 @@ const Courses = () => {
                         const edit = document.createElement('button')
                         const del = document.createElement('button')
                         const buttonWrapper = document.createElement('div')
+                        const created=document.createElement("span")
+                        const modified=document.createElement("span")
                         wrapper.className = 'shadow p-3 mb-5 bg-body rounded offset'
                         heading.innerText = res.title
                         paragraph.innerText = res.shortDescription
@@ -81,6 +79,12 @@ const Courses = () => {
                         enrol.className = 'btn btn-primary'
                         edit.innerText = 'Edit'
                         edit.className = 'btn btn-primary'
+                        const d=new Date(result[0].createdAt*1000)
+                        created.innerText=`Created at: ${d.getFullYear()}/${d.getMonth()+1}/${d.getDate()}`
+                        modified.innerText=`\nLast modified by: Instructor`
+                        preview.onclick=()=>{
+                            navigate(`/course/${res.collectionID}`)
+                        }
                         edit.onclick = () => {
                             //
                             navigate(`/course/edit/${res.ID}`)
@@ -104,18 +108,22 @@ const Courses = () => {
                         }
                         del.innerText = 'Delete'
                         del.className = 'btn btn-primary'
-                        //buttonWrapper.append(preview)
-                        buttonWrapper.append(enrol)
-                        if (user?.role == 'instructor') {
+                        if(user?.role=="student"){
+                            buttonWrapper.append(enrol)
+                        }
+                        if (user?.role == 'instructor' || user?.role=='admin') {
+                            buttonWrapper.append(preview)
                             buttonWrapper.append(del)
                             buttonWrapper.append(edit)
-                        } else {
-                            //
                         }
                         wrapper.append(heading)
                         wrapper.append(image)
                         wrapper.append(paragraph)
                         wrapper.append(buttonWrapper)
+                        if(user?.role=="admin" || user?.role=="instructor"){
+                            wrapper.append(created)
+                            wrapper.append(modified)
+                        }
                         existing!.append(wrapper)
                         wrapper!.onclick = () => {
                             /*console.log(res.title)*/
@@ -127,6 +135,7 @@ const Courses = () => {
     useEffect(() => {
         if(user){
             const myHeaders = new Headers()
+            myHeaders.append("x-auth-token", sessionStorage.getItem("token")!);
             myHeaders.append('Content-Type', 'application/json')
 
             const raw = JSON.stringify({
@@ -140,18 +149,23 @@ const Courses = () => {
                 redirect: 'follow',
             }
 
-            void fetch('https://kula-learn-server.herokuapp.com/api/enrol', requestOptions)
+            void fetch('http://localhost:4000/api/enrol', requestOptions)
                 .then((response) => response.json())
                 .then((result) => {
+                    if(result.ok==false){
+                        navigate('/login')
+                        return
+                    }
                     const set=new Set()
+                    //console.log(result)
                     result.forEach((t:string)=>{
                         set.add(t)
                     })
                     const list=Array.from(set)
                     const wrapper= document.getElementById("enrolled-courses")
-                    wrapper!.innerHTML=""
                     list.forEach((l:any)=>{
                         const myHeaders = new Headers();
+                        myHeaders.append("x-auth-token", sessionStorage.getItem("token")!)
                         myHeaders.append("Content-Type", "application/json");
 
                         const raw = JSON.stringify({
@@ -165,7 +179,7 @@ const Courses = () => {
                         redirect: 'follow'
                         };
 
-                        void fetch("https://kula-learn-server.herokuapp.com/api/course/get", requestOptions)
+                        void fetch("http://localhost:4000/api/course/get", requestOptions)
                         .then(response => response.json())
                         .then((result:any) => {
                             const d=document.createElement("div")
@@ -181,19 +195,6 @@ const Courses = () => {
                             d.append(paragraph)
                             wrapper?.append(d)
                         })
-                        //.catch(error => console.log('error', error));
-                        // const d=document.createElement("div")
-                        // const paragraph=document.createElement("p")
-                        // const btn=document.createElement("button")
-                        // paragraph.innerText=l
-                        // btn.onclick=()=>{
-                        //     navigate(`/course/${l}`, {replace:false})
-                        // }
-                        // btn.className="btn btn-success"
-                        // btn.innerText="View"
-                        // paragraph.append(btn)
-                        // d.append(paragraph)
-                        // wrapper?.append(d)
                     })
                 })
                 //.catch((error) => console.log('error', error))
@@ -243,7 +244,7 @@ const Courses = () => {
                                     </>
                                 ) : (
                                     <>
-                                        {user.role == 'instructor' ? (
+                                        {(user.role == 'instructor' || user.role=='admin') ? (
                                             <>
                                                 <button
                                                     className="btn btn-primary wide wider"
@@ -291,7 +292,6 @@ const Courses = () => {
                 <div className="">
                     <p>
                         <div id="cards-li" style={{ textAlign: 'center' }}>
-                            {/* <Loading /> */}
                         </div>
                     </p>
                 </div>

@@ -4,7 +4,12 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const https = require('https')
 const http = require('http')
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+require("dotenv");
 const app = express();
+const { admin, instructor, student } = require("./middleware/roles");
+const auth = require("./middleware/auth");
 app.use(cors());
 app.use(bodyParser.json());
 const PORT = process.env.PORT || 4000
@@ -33,8 +38,15 @@ function generateUUID() {
 		}
 	);
 }
+async function encryptPassword(password){
+
+    // Hash the password
+    const salt = await bcrypt.genSalt(15);
+    const pw=await bcrypt.hash(password, salt);
+	return pw
+}
 // Insert course
-app.post("/course", async (req, res) => {
+app.post("/course",[auth, student], async (req, res) => {
 	const db = new sqlite3.Database("database.db");
 	db.serialize(function () {
 		const id = generateUUID();
@@ -47,7 +59,7 @@ app.post("/course", async (req, res) => {
 	res.send(req.body);
 });
 //GET All courses
-app.get("/courses/", async (_req, res) => {
+app.get("/courses/",[auth, student], async (_req, res) => {
 	const db = new sqlite3.Database("database.db");
 	db.serialize(function () {
 		db.all("SELECT * FROM course;", (_err, video) => {
@@ -67,7 +79,7 @@ app.post("/api/course", async (req, res) => {
 	});
 });
 // Get 1 course by collectionID
-app.post("/api/course/get", (req, res)=>{
+app.post("/api/course/get",[auth, student], (req, res)=>{
 	const db = new sqlite3.Database("database.db");
 	db.serialize(function () {
 		db.all(
@@ -79,7 +91,7 @@ app.post("/api/course/get", (req, res)=>{
 	db.close();
 })
 //Update course
-app.put("/api/course", async (req, res) => {
+app.put("/api/course",[auth, student], async (req, res) => {
 	const db = new sqlite3.Database("database.db");
 	db.serialize(function () {
 		db.run(
@@ -90,7 +102,7 @@ app.put("/api/course", async (req, res) => {
 	res.send(req.body);
 });
 //DELETE course
-app.delete("/courses/", async (req, res) => {
+app.delete("/courses/",[auth, student], async (req, res) => {
 	const db = new sqlite3.Database("database.db");
 	db.serialize(function () {
 		db.all(`DELETE FROM course where ID="${req.body.id}"`, (_err, video) => {
@@ -103,7 +115,7 @@ app.delete("/courses/", async (req, res) => {
 	});
 });
 //Insert modules
-app.post("/module", async (req, res) => {
+app.post("/module",[auth, student], async (req, res) => {
 	const db = new sqlite3.Database("database.db");
 	db.serialize(function () {
 		const id = generateUUID();
@@ -117,7 +129,7 @@ app.post("/module", async (req, res) => {
 	res.send(req.body);
 });
 //Get modules
-app.post("/modules", async (req, res) => {
+app.post("/modules",[auth, student], async (req, res) => {
 	const db = new sqlite3.Database("database.db");
 	db.serialize(function () {
 		db.all(
@@ -130,7 +142,7 @@ app.post("/modules", async (req, res) => {
 	db.close();
 });
 // delete module
-app.delete("/api/module", async (req, res) => {
+app.delete("/api/module",[auth, student], async (req, res) => {
 	const db = new sqlite3.Database("database.db");
 	db.serialize(function () {
 		db.all(
@@ -143,7 +155,7 @@ app.delete("/api/module", async (req, res) => {
 	db.close();
 });
 //Update module
-app.put("/modules", async (req, res) => {
+app.put("/modules",[auth, student], async (req, res) => {
 	const db = new sqlite3.Database("database.db");
 	db.serialize(function () {
 		db.all(
@@ -156,7 +168,7 @@ app.put("/modules", async (req, res) => {
 	db.close();
 });
 // delete module
-app.delete("/courses", async (req, res) => {
+app.delete("/courses",[auth, student], async (req, res) => {
 	const db = new sqlite3.Database("database.db");
 	db.serialize(function () {
 		db.all(
@@ -168,13 +180,15 @@ app.delete("/courses", async (req, res) => {
 	});
 	db.close();
 });
-app.post("/api/user", (req, res)=>{
+app.post("/api/user", async(req, res)=>{
 	const db = new sqlite3.Database("database.db");
-	db.serialize(function () {
+	const password= await encryptPassword(req.body.password)
+	db.serialize(async function () {
 		const id = generateUUID();
 		const iat = Math.round(new Date().getTime() / 1000);
+		
 		db.run(
-			`INSERT INTO users VALUES ("${id}", "${req.body.firstName}", "${req.body.lastName}", "${req.body.email}", "${req.body.password}","student", ${iat})`
+			`INSERT INTO users VALUES ("${id}", "${req.body.firstName}", "${req.body.lastName}", "${req.body.email}", "${password}","student", ${iat})`
 		);
 	});
 	db.close();
@@ -182,17 +196,35 @@ app.post("/api/user", (req, res)=>{
 })
 app.post("/api/user/get", (req, res)=>{
 	const db = new sqlite3.Database("database.db");
-	db.serialize(function () {
+	db.serialize( async function () {
 		db.all(
-			`SELECT ID,firstName, lastName, email, createdAt, role FROM users WHERE email="${req.body.email}";`,
-			function (_err, video) {
-				res.send(video);
+			`SELECT * FROM users WHERE email="${req.body.email}";`,
+			async function (_err, respo) {
+				//res.send(video);
+				//console.log(process.env.JWT_PRIVATE_KEY)
+				const valid = await bcrypt.compare(req.body.password, respo[0].password)
+				if (!valid){
+					res.sendStatus(404)
+				}
+				else{
+				const token = jwt.sign({
+					id: respo.ID,
+					roles: respo.role,
+					user:respo
+				}, "ad5a47fc-5827-4908-8799-8a0130f4dc0e", { expiresIn: "15m" });
+				
+				res.send({
+					ok: true,
+					token: token,
+					user:respo
+				});
 			}
-		);
+			});
 	});
 	db.close();
 })
-app.post("/api/enrol", (req, res)=>{
+app.post("/api/enrol", [auth, student], (req, res)=>{
+	console.log(req.user.roles)
 	const db = new sqlite3.Database("database.db");
 	db.serialize(function () {
 		const id = generateUUID();
@@ -205,7 +237,7 @@ app.post("/api/enrol", (req, res)=>{
 	db.close();
 	res.send(req.body);
 })
-app.put("/api/enrol", (req, res)=>{
+app.put("/api/enrol",[auth, student], (req, res)=>{
 	const db = new sqlite3.Database("database.db");
 	list=[]
 	db.serialize(function () {
@@ -221,7 +253,7 @@ app.put("/api/enrol", (req, res)=>{
 	db.close();
 })
 // ****************Users********************** //
-app.get('/users', (err, res)=>{
+app.get('/users',[auth, student], (err, res)=>{
 	const db = new sqlite3.Database("database.db");
 	db.serialize(function () {
 		db.all(
@@ -232,5 +264,55 @@ app.get('/users', (err, res)=>{
 	});
 	db.close();
 })
+app.post('/api/user/instructor',[auth, student], (req, res)=>{
+	const db = new sqlite3.Database("database.db");
+	db.serialize(function () {
+		db.all(
+			`SELECT * FROM course WHERE uploader="${req.body.uploader}";`, (_er, rs)=>{
+				res.send(rs)
+			}
+		)
+	});
+	db.close();
+})
+app.post("/auth/login", async(req, res)=>{
+	const users = [{ email: "vincent@vincentlab.net", password: "$2b$15$zqY2Q4eOoGzFpZkHJz9HS.BSfXc/HM2E/yTWa1awFmTMgN2bE72Uu", roles: ["admin", "editor", "viewer"] }, { email: "s.ntando99@gmail.com", password: "$2b$15$zqY2Q4eOoGzFpZkHJz9HS.BSfXc/HM2E/yTWa1awFmTMgN2bE72Uu", roles: ["admin", "editor", "viewer"] }];
+    console.log(req.body.email)
+    // Get to user from the database, if the user is not there return error
+    let user = users.find(u => u.email === req.body.email);
+    if (!user) throw new Error("Invalid email or password.");
+
+    // Compare the password with the password in the database
+    const valid = await bcrypt.compare(req.body.password, user.password)
+    if (!valid){
+		res.sendStatus(404)
+	}
+	else{
+		const token = jwt.sign({
+			id: user._id,
+			roles: user.roles,
+		}, "ad5a47fc-5827-4908-8799-8a0130f4dc0e", { expiresIn: "15m" });
+		
+		res.send({
+			ok: true,
+			token: token
+		});
+	}
+
+    // const token = jwt.sign({
+    //     id: user._id,
+    //     roles: user.roles,
+    // }, "jwtPrivateKey", { expiresIn: "15m" });
+	
+})
+app.post("/auth/register", async(req, res)=>{
+	//const users = [{ email: "vincent@vincentlab.net", password: "$2b$15$zqY2Q4eOoGzFpZkHJz9HS.BSfXc/HM2E/yTWa1awFmTMgN2bE72Uu", roles: ["admin", "editor", "viewer"] }, { email: "s.ntando99@gmail.com", password: "$2b$15$zqY2Q4eOoGzFpZkHJz9HS.BSfXc/HM2E/yTWa1awFmTMgN2bE72Uu", roles: ["admin", "editor", "viewer"] }];
+    console.log(req.body.email)
+	//req.body.email
+	const password= await encryptPassword(req.body.password)
+	console.log(password)
+    // Get to user from the database, if the user is not there return erro
+})
+
 http.createServer(app).listen(PORT)
 console.log("Server running on PORT "+PORT);

@@ -1,0 +1,1 @@
+export const JWT_PRIVATE_KEY="ad5a47fc-5827-4908-8799-8a0130f4dc0e"

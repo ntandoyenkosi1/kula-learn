@@ -19,6 +19,7 @@ const Login = () => {
 
         const raw = JSON.stringify({
             email: `${email.value}`,
+            password:`${password.value}`
         })
 
         const requestOptions: RequestInit = {
@@ -28,11 +29,12 @@ const Login = () => {
             redirect: 'follow',
         }
 
-        void fetch('https://kula-learn-server.herokuapp.com/api/user/get', requestOptions)
+        void fetch('http://localhost:4000/api/user/get', requestOptions)
             .then((response) => response.json())
             .then((result) => {
                 //console.log(result)
                 sessionStorage.setItem('user', JSON.stringify(result))
+                sessionStorage.setItem('token', result.token)
                 navigate('/')
             })
         //.catch(error => console.log('error', error));

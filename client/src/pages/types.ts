@@ -1,9 +1,11 @@
-// export default interface CourseType {
-//     title:String,
-//     shortDescription:String,
-//     longDescription:String,
-//     video:String
-// }
+export interface User {
+    ID: string
+    firstName: string
+    lastName: string
+    email: string
+    role: string
+    createdAt: string
+}
 export interface ModuleType{
     ID:string,
     collectionID:string,
