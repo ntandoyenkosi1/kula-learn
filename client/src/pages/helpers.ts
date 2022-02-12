@@ -1,3 +1,4 @@
+
 /**
  * This method is for calling APIs
  * @param endpoint Endpoint to the server. Does not start with "/"
@@ -12,7 +13,13 @@ export async function callApi(endpoint: string, method: string, headers: boolean
     const url = `https://kula-learn-server.herokuapp.com/${endpoint}`
     if (headers) {
         const myHeaders = new Headers()
-        myHeaders.append('Content-Type', 'application/json')
+        try{
+            myHeaders.append('Content-Type', 'application/json')
+            myHeaders.append('x-auth-token', getCookie("token"))
+        }
+        catch{
+            //
+        }
         const requestOptions: RequestInit = {
             method: method,
             headers: myHeaders,
@@ -38,3 +45,9 @@ export async function callApi(endpoint: string, method: string, headers: boolean
             })
     }
 }
+export function getCookie(name:string) {
+	const value = `; ${document.cookie}`;
+	const parts:any = value.split(`; ${name}=`);
+	if (parts.length === 2) return parts.pop().split(';').shift();
+}
+

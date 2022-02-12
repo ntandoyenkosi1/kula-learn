@@ -2,37 +2,21 @@ import { useEffect, useState } from 'react'
 import { Alert, Button, Modal } from 'react-bootstrap'
 import { useParams } from 'react-router-dom'
 import Navigation from '../layout/Navigation'
-import { callApi } from '../helpers'
+import { callApi, getCookie } from '../helpers'
 const EditModule = () => {
     const { id } = useParams()
     const [moduleData, setModuleData] = useState()
     const [modalShow, setModalShow] = useState(false)
     const handleSave = async () => {
-        //
         const t = (document.getElementById('module-title') as HTMLInputElement).value
         const d = (document.getElementById('video-short') as HTMLInputElement).value
-        //const l = (document.getElementById('video-long') as HTMLInputElement).value
         const i = (document.getElementById('video-link') as HTMLInputElement).value
-        // const myHeaders = new Headers()
-        // myHeaders.append('Content-Type', 'application/json')
-
         const raw = JSON.stringify({
             id: id,
             title: t,
             shortDescription: d,
             image: i,
         })
-        //#region previous request
-        // const requestOptions: RequestInit = {
-        //     method: 'PUT',
-        //     headers: myHeaders,
-        //     body: raw,
-        //     redirect: 'follow',
-        // }
-        // await fetch('https://kula-learn-server.herokuapp.com/api/course/', requestOptions).then((response) =>
-        //     response.json()
-        // )
-        //#endregion
         await callApi('api/course/', 'PUT', true, raw)
         setModalShow(false)
     }
@@ -55,8 +39,8 @@ const EditModule = () => {
         void fetch('https://kula-learn-server.herokuapp.com/api/course/', requestOptions)
             .then((response) => response.json())
             .then((result) => {
-                // console.log(result)
                 const myHeaders = new Headers()
+                myHeaders.append('x-auth-token', getCookie('token'))
                 myHeaders.append('Content-Type', 'application/json')
 
                 const raw = JSON.stringify({
@@ -73,7 +57,6 @@ const EditModule = () => {
                 void fetch('https://kula-learn-server.herokuapp.com/modules/', requestOptions)
                     .then((response) => response.json())
                     .then((result) => {
-                        // console.log(result)
                         result.forEach((res: any) => {
                             const blank = document.getElementById('edit-blank')
                             const wrapper = document.createElement('div')
@@ -85,7 +68,7 @@ const EditModule = () => {
                             heading.innerText = res.title
                             editBtn.innerText = 'Edit'
                             deleteBtn.innerText = 'Delete'
-                            editBtn.className = 'btn btn-success'
+                            editBtn.className = 'btn'
                             deleteBtn.className = 'btn btn-danger'
                             editBtn.onclick = () => {
                                 setModuleData(res)
@@ -110,8 +93,6 @@ const EditModule = () => {
                                 void fetch('https://kula-learn-server.herokuapp.com/api/module', requestOptions).then(
                                     (response) => response.text()
                                 )
-                                //.then(result => {/*console.log(result)*/})
-                                //.catch(error => {/*console.log('error', error)*/});
                             }
                             wrapper.className = 'shadow p-3 mb-5 bg-body rounded'
                             wrapper.append(heading)
@@ -121,22 +102,18 @@ const EditModule = () => {
                             blank!.append(wrapper)
                         })
                     })
-                //.catch((error) =>{/*console.log('error', error)*/})
             })
-        //.catch((error) => {/*console.log('error', error)*/})
     }, [])
     function Module(props: any) {
-        // console.log(props)
         return (
             <div>
-                <Alert variant="secondary">
+                <Alert className="custom-alert">
                     <Alert.Heading>
                         <h1>
                             <b>Edit module</b>
                         </h1>
                     </Alert.Heading>
                 </Alert>
-                {/* <h4>{props.title}</h4> */}
                 <div className="mb-3">
                     <label className="form-label">Edit course title.</label>
                     <input
@@ -202,7 +179,7 @@ const EditModule = () => {
                         value={props.data.video}
                     />
                 </div>
-                <button className="btn btn-success" onClick={handleSave}>
+                <button className="btn" onClick={handleSave}>
                     Save changes
                 </button>
             </div>
@@ -227,9 +204,9 @@ const EditModule = () => {
     return (
         <>
             <div className="w3-main" style={{ marginLeft: '210px' }}></div>
-            <div className="w3-teal">
+            <div className="bg-new">
                 <button
-                    className="w3-button w3-teal w3-xlarge w3-hide-large"
+                    className="w3-button bg-new w3-xlarge w3-hide-large"
                     onClick={() => (document.getElementById('mySidebar')!.style.display = 'block')}
                 >
                     &#9776;

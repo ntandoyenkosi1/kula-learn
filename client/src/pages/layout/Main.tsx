@@ -7,9 +7,9 @@ const Main = (props: any) => {
         return (
             <div>
                 <div className="w3-main" style={{ marginLeft: '200px' }}>
-                    <div className="w3-teal">
+                    <div className="bg-new">
                         <button
-                            className="w3-button w3-teal w3-xlarge w3-hide-large"
+                            className="w3-button bg-new w3-xlarge w3-hide-large"
                             onClick={w3_open}
                         >
                             &#9776;
@@ -25,9 +25,9 @@ const Main = (props: any) => {
         return (
             <div>
                 <div className="w3-main">
-                    <div className="w3-teal">
+                    <div className="bg-new">
                         <button
-                            className="w3-button w3-teal w3-xlarge w3-hide-large"
+                            className="w3-button bg-new w3-xlarge w3-hide-large"
                             onClick={w3_open}
                         >
                             &#9776;

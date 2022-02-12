@@ -2,7 +2,6 @@
 import { useEffect, useState } from 'react'
 import { Accordion, Alert } from 'react-bootstrap'
 //import icon from "./assets/falling-star.png"
-import video from '../assets/Media1.mp4'
 import explain from '../assets/presentation.png'
 import Loading from '../auth/Loading'
 import Footer from '../layout/Footer'
@@ -40,7 +39,7 @@ const Module = (props: any) => {
                 style={{ width: '200px' }}
                 id="mySidebar"
             >
-                <Alert variant="success">
+                 <Alert className='custom-alert' variant="success">
                     <h2>
                         <b>Chapters</b>
                     </h2>
@@ -58,9 +57,9 @@ const Module = (props: any) => {
                 ></div>
             </div>
             <div className="w3-main" style={{ marginLeft: '210px' }}>
-                <div className="w3-teal">
+                <div className="bg-new">
                     <button
-                        className="w3-button w3-teal w3-xlarge w3-hide-large"
+                        className="w3-button bg-new w3-xlarge w3-hide-large"
                         onClick={() =>
                             (document.getElementById('mySidebar')!.style.display = 'block')
                         }
@@ -113,7 +112,6 @@ const Module = (props: any) => {
                                     <Accordion.Body>
                                         <div style={{ textAlign: 'center' }}>
                                             <video
-                                                src={video}
                                                 autoPlay={false}
                                                 controls={true}
                                                 style={{ width: '99%' }}

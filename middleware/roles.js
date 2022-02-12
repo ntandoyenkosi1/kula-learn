@@ -22,8 +22,9 @@ function instructor(req, res, next) {
 
 function student(req, res, next) {
 	const valid = req.user.user[0].role.includes("student");
+	const val = req.user.user[0].role.includes("instructor");
 	const v = req.user.user[0].role.includes("admin");
-	if (valid == false && v == false)
+	if (valid == false && v == false && val==false)
 		return res.status(403).send({
 			ok: false,
 			error: "Access denied.",

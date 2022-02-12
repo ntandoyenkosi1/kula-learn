@@ -7,6 +7,9 @@ const LogoutButton = () => {
     const handleLogout = () => {
         //
         sessionStorage.clear()
+        document.cookie.split(';').forEach(function(c) {
+            document.cookie = c.trim().split('=')[0] + '=;' + 'expires=Thu, 01 Jan 1970 00:00:00 UTC;';
+          });
         navigate('/')
     }
     //const { logout } = useAuth0();
@@ -30,10 +33,10 @@ const LogoutButton = () => {
         </svg>
     )
     return (
-        // <button className="btn btn-success" onClick={() => logout({ returnTo: window.location.origin })}>
+        // <button className="btn" onClick={() => logout({ returnTo: window.location.origin })}>
         //   {icon}Log Out
         // </button>
-        <button className="btn btn-success" onClick={handleLogout}>
+        <button className="btn" onClick={handleLogout}>
             {icon}Logout
         </button>
     )

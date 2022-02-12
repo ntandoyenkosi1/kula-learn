@@ -2,10 +2,11 @@
 import { useEffect } from 'react'
 import { Alert } from 'react-bootstrap'
 import { useNavigate, useParams } from 'react-router-dom'
+import { getCookie } from '../helpers'
 const Edit = () => {
     const { id } = useParams()
     const navigate = useNavigate()
-    const handleEditModules=()=>{
+    const handleEditModules = () => {
         //
         navigate(`/module/${id}`)
     }
@@ -15,6 +16,7 @@ const Edit = () => {
         const shortValue = (document.getElementById('video-short') as HTMLInputElement).value
         const imageVale = (document.getElementById('image-link') as HTMLInputElement).value
         const myHeaders = new Headers()
+        myHeaders.append('x-auth-token', getCookie('token'))
         myHeaders.append('Content-Type', 'application/json')
         const raw = JSON.stringify({
             id: id,
@@ -30,17 +32,19 @@ const Edit = () => {
             redirect: 'follow',
         }
 
-        void fetch('https://kula-learn-server.herokuapp.com/api/course/', requestOptions)
-            .then((response) => response.json())
-            // .then((result) => {
-            //     console.log(result)
-            //     //navigate('/courses')
-            // })
-            // .catch((error) => console.log('error', error))
+        void fetch('https://kula-learn-server.herokuapp.com/api/course/', requestOptions).then((response) =>
+            response.json()
+        )
+        // .then((result) => {
+        //     console.log(result)
+        //     //navigate('/courses')
+        // })
+        // .catch((error) => console.log('error', error))
     }
     useEffect(() => {
         const myHeaders = new Headers()
         myHeaders.append('Content-Type', 'application/json')
+        myHeaders.append('x-auth-token', getCookie('token'))
         const raw = JSON.stringify({
             id: id,
         })
@@ -58,25 +62,25 @@ const Edit = () => {
                 const t = document.getElementById('module-title') as HTMLInputElement
                 const short = document.getElementById('video-short') as HTMLInputElement
                 const image = document.getElementById('image-link') as HTMLInputElement
-                const imageDisp=document.getElementById("image-source") as HTMLImageElement
+                const imageDisp = document.getElementById('image-source') as HTMLImageElement
                 t!.value = result[0].title
                 short!.value = result[0].shortDescription
                 image!.value = result[0].imageUrl
-                imageDisp!.src=result[0].imageUrl
+                imageDisp!.src = result[0].imageUrl
             })
-            // .catch((error) => console.log('error', error))
+        // .catch((error) => console.log('error', error))
     }, [])
     return (
         <>
             <div>
-                <Alert variant="secondary">
+                <Alert className="custom-alert">
                     <Alert.Heading>
                         <h1>
                             <b>Edit a course</b>
                         </h1>
                     </Alert.Heading>
                 </Alert>
-                <button onClick={handleEditModules} className="btn btn-success">
+                <button onClick={handleEditModules} className="btn">
                     Edit modules
                 </button>
                 <h4>Course Title</h4>
@@ -109,15 +113,16 @@ const Edit = () => {
                     style={{ maxWidth: '150px', maxHeight: '150px' }}
                 />
                 <div className="mb-3">
-                    <label className="form-label">Enter a new link below if you wish to change the image above</label>
+                    <label className="form-label">
+                        Enter a new link below if you wish to change the image above
+                    </label>
                     <input id="image-link" className="form-control" type="text" />
                 </div>
-                <button onClick={handleEdit} className="btn btn-success">
+                <button onClick={handleEdit} className="btn">
                     Save edits
                 </button>
             </div>
         </>
     )
 }
-
 export default Edit

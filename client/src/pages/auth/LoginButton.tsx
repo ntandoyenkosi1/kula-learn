@@ -23,9 +23,9 @@ const LoginButton = () => {
             />
         </svg>
     )
-    // return <button className="btn btn-success" onClick={() => loginWithRedirect()}>{icon}Log In/Register</button>;
+    // return <button className="btn" onClick={() => loginWithRedirect()}>{icon}Log In/Register</button>;
     return (
-        <button className="btn btn-success" onClick={() => navigate('/login')}>
+        <button className="btn" onClick={() => navigate('/login')}>
             {icon}Login
         </button>
     )

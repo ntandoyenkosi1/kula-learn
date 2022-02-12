@@ -4,6 +4,8 @@ import { useState } from 'react'
 import Footer from '../layout/Footer'
 import Main from '../layout/Main'
 import Courses from './Courses'
+import { getCookie } from '../helpers'
+import { User } from '../types'
 //import Loading from '../auth/Loading'
 interface Courses {
     collectionID: string
@@ -35,27 +37,62 @@ const Create = () => {
     const [modalShow, setModalShow] = useState(false)
     const [courseToggled, setCourseToggled] = useState(false)
     const [moduleToggled, setModuleToggled] = useState(false)
+    const [publish, setPublish]=useState("false")
+    const [visibility, setVisibility]=useState("public")
     const [course, setCourse] = useState<Courses>()
+    const [image, setImage]=useState("")
     const moduleList: any = []
+    const handleFileUpload=(e:any)=>{
+        const formdata = new FormData();
+formdata.append("image", e.target?.files[0], e.target?.files[0].name);
+
+const requestOptions:RequestInit = {
+  method: 'POST',
+  body: formdata,
+  redirect: 'follow'
+};
+
+void fetch("https://api.imgbb.com/1/upload?key=8d0a7e3689b931e211b03dbd58eab571", requestOptions)
+  .then(response => response.json())
+  .then((result:any)=> {
+        setImage(result.data?.display_url)
+  })
+  //.catch(error => console.log('error', error));
+//         const formdata = new FormData();
+//         formdata.append("image", e.target?., e.target?.files[0].name);
+//         const requestOptions:RequestInit = {
+//         method: 'POST',
+//         body: formdata,
+//         redirect: 'follow'
+//         };
+
+//     fetch("https://api.imgbb.com/1/upload?key=8d0a7e3689b931e211b03dbd58eab571", requestOptions)
+//   .then(response => response.text())
+//   .then(result => console.log(result))
+//   .catch(error => console.log('error', error));
+    }
     const handleAddCourse = async () => {
         const t = (document.getElementById('course-title') as HTMLInputElement).value
         const d = (document.getElementById('course-description') as HTMLInputElement).value
-        const i = (document.getElementById('course-link') as HTMLInputElement).value
         const iat = Math.round(new Date().getTime() / 1000)
-        if (t == '' || d == '' || i == '') {
+        if (t == '' || d == '') {
             return
         }
         const collection = generateUUID()
-        setCourse({ collectionID: collection, title: t, description: d, image: i, iat: iat })
+        setCourse({ collectionID: collection, title: t, description: d, image: image, iat: iat })
         const myHeaders = new Headers()
+        myHeaders.append('x-auth-token', getCookie("token"))
         myHeaders.append('Content-Type', 'application/json')
-
+        const person:User= JSON.parse(getCookie('user')).user[0]
         const raw = JSON.stringify({
             collectionID: collection,
             title: t,
             description: d,
-            image: i,
+            image: image,
             iat: iat,
+            uploader: person.email,
+            visibility:visibility,
+            published: publish
         })
 
         const requestOptions: RequestInit = {
@@ -80,15 +117,15 @@ const Create = () => {
             return
         }
         const myHeaders = new Headers()
+        myHeaders.append('x-auth-token', getCookie("token"))
         myHeaders.append('Content-Type', 'application/json')
-
         const raw = JSON.stringify({
             collectionID: course?.collectionID,
             language: 'en',
             title: moduleTitle,
             shortDescription: short,
             longDescription: long,
-            video: link,
+            video: link
         })
 
         const requestOptions: RequestInit = {
@@ -120,21 +157,21 @@ const Create = () => {
     function Module() {
         return (
             <div>
-                <Alert variant="secondary">
-                    <Alert.Heading>
+                 <Alert className='custom-alert'  >
+                     <Alert.Heading>
                         <h1>
-                            <b>Add a new module</b>
+                           New Module Details
                         </h1>
                     </Alert.Heading>
                 </Alert>
                 <h4>Module Title</h4>
                 <div className="mb-3">
-                    <label className="form-label">Enter a course title.</label>
+                    <label className="form-label">Enter a module title. </label>
                     <input
                         id="module-title"
                         className="form-control"
                         type="text"
-                        placeholder="Module title"
+                        placeholder='Title'
                     />
                 </div>
                 <div className="mb-3">
@@ -146,7 +183,6 @@ const Create = () => {
                 <div className="form-floating textarea mb-3">
                     <textarea
                         className="form-control"
-                        placeholder="Enter description"
                         maxLength={500}
                         id="video-short"
                     ></textarea>
@@ -157,13 +193,12 @@ const Create = () => {
                 </div>
                 <h4>Long description</h4>
                 <p>
-                    Use this area to give a long description of the new module. Take note that HTML
-                    format is supported.
+                    Use this area to give a long description of the new module. Take note that Markdown text is supported.
                 </p>
                 <div className="form-floating textarea mb-3">
                     <textarea
                         className="form-control"
-                        placeholder="Enter description"
+                        placeholder="# Title description ## Some title"
                         maxLength={2000}
                         id="video-long"
                     ></textarea>
@@ -172,27 +207,18 @@ const Create = () => {
                         <span style={{ color: 'red' }}>(max: 2000 characters)</span>
                     </label>
                 </div>
-                <h4>Video Explainer</h4>
                 <div className="mb-3">
-                    <label className="form-label">Enter a brief video explanation here.</label>
-                    <input
-                        id="video-description"
-                        className="form-control"
-                        type="text"
-                        placeholder="Text explainer of the video in this module"
-                    />
-                </div>
-                <div className="mb-3">
-                    <label className="form-label">Enter a video link here.</label>
+                    <label className="form-label"><b>(Optional) </b>Enter a video link here if there is a video version for this module.
+                    <b></b></label>
                     <input
                         id="video-link"
                         className="form-control"
                         type="text"
-                        placeholder="Video link to an explainer of this module"
+                        placeholder="Use: https://www.youtube.com/watch?v=...... OR https://www.youtube.com/embed/...."
                     />
                 </div>
-                <button className="btn btn-success" onClick={handleAddModule}>
-                    Add module
+                <button className="btn" onClick={handleAddModule}>
+                    Save Module
                 </button>
             </div>
         )
@@ -201,7 +227,7 @@ const Create = () => {
         return (
             <Modal {...props} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
                 <Modal.Header closeButton>
-                    <Modal.Title id="contained-modal-title-vcenter">Add a new Module</Modal.Title>
+                    <Modal.Title id="contained-modal-title-vcenter">Add Module</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Module />
@@ -215,8 +241,8 @@ const Create = () => {
     return (
         <div>
             <Main origin="Home" />
-            <Alert variant="secondary">
-                <Alert.Heading>
+             <Alert className='custom-alert'>
+                 <Alert.Heading>
                     <h1>
                         <b>Add a new course</b>
                     </h1>
@@ -259,21 +285,47 @@ const Create = () => {
                                 placeholder="Enter short description"
                             />
                         </div>
-                        <div className="input-group mb-3">
+                        {/* <div className="input-group mb-3">
                             <input
                                 type="text"
                                 id="course-link"
-                                maxLength={50}
                                 required
+                                maxLength={200}
                                 className="form-control"
-                                placeholder="Enter a thumbnail link here for the course"
+                                placeholder="Enter image url of the course."
                             />
+                        </div> */}
+                        <div className="mb-3">
+                        <label htmlFor="file" className="form-label">Upload a picture for the course</label>
+                        <input className="form-control form-control-sm" onChange={handleFileUpload} id="file" type="file"/>
                         </div>
-                        <p>
-                            <button className="btn btn-success wide" onClick={handleAddCourse}>
+                        <h3>Publish information</h3>
+                        <p style={{marginBottom:"0px"}}><b>Publish Now: </b>This course will be available immediately.</p>
+                        <p><b>Publish Later: </b>This course will not be available immediately. You will be able to publish it after modules have been added.</p>
+                         <div className="form-check form-check-inline">
+                        <input className="form-check-input" type="radio" onChange={()=>setPublish("true")} name="inlineRadioOptions" id="publishNow" value="now"/>
+                        <label className="form-check-label" htmlFor="inlineRadio1">Publish Now</label>
+                        </div>
+                        <div className="form-check form-check-inline">
+                        <input className="form-check-input" type="radio" onChange={()=>setPublish("false")} name="inlineRadioOptions" id="publishLater" value="later" defaultChecked/>
+                        <label className="form-check-label" htmlFor="inlineRadio2">Publish Later</label>
+                        </div>
+                        <h3>Visibility Information</h3>
+                        <p style={{marginBottom:"0px"}}><b>Public: </b>Everyone who is signed in can access this course.</p>
+                        <p><b>Private: </b>Only people you add by email will have access to the course.</p>
+                        <div className="form-check form-check-inline">
+                        <input className="form-check-input" type="radio" onChange={()=>setVisibility("public")} name="VisibilityOptions" id="publicVisibility" value="public" defaultChecked/>
+                        <label className="form-check-label" htmlFor="VisibilityOptions">Public</label>
+                        </div>
+                        <div className="form-check form-check-inline">
+                        <input className="form-check-input" onChange={()=>setVisibility("private")} type="radio" name="VisibilityOptions" id="privateVisibility" value="private"/>
+                        <label className="form-check-label" htmlFor="VisibilityOptions">Private</label>
+                        </div>
+                        <div>
+                            <button className="btn wide" onClick={handleAddCourse}>
                                 Save
                             </button>
-                        </p>
+                            </div>
                     </>
                 )}
                 {courseToggled ? (
@@ -281,7 +333,7 @@ const Create = () => {
                         <h2>Add a module</h2>
                         <hr />
                         <button
-                            className="btn btn-success center"
+                            className="btn"
                             onClick={() => setModalShow(true)}
                         >
                             Click here to add a new module

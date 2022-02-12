@@ -6,6 +6,7 @@ import Profile from '../auth/Profile'
 import {ModuleType} from '../types'
 import Loading from '../auth/Loading'
 import ModuleView from '../module/ViewModule'
+import { getCookie } from '../helpers'
 //import { withAuthenticationRequired } from '@auth0/auth0-react'
 
 const ModuleData: ModuleType[] = []
@@ -15,7 +16,8 @@ const Course = () => {
     useEffect(() => {
         const myHeaders = new Headers()
         myHeaders.append('Content-Type', 'application/json')
-
+        //myHeaders.append('x-auth-token', sessionStorage.getItem('token')!)
+        myHeaders.append('x-auth-token', getCookie("token"))
         const raw = JSON.stringify({
             id: id,
         })
