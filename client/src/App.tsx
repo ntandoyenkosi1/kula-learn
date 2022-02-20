@@ -8,7 +8,6 @@ import Edit from './pages/course/Edit'
 import EditModule from './pages/course/EditModule'
 import Register from './pages/auth/Register'
 import Login from './pages/auth/Login'
-import Development from './pages/layout/Development'
 import Admin from './pages/portal/Admin'
 import Student from './pages/portal/Student'
 import Instructor from './pages/portal/Instructor'
@@ -17,7 +16,6 @@ import NotAuthorized from './pages/error/NotAuthorized'
 const App = () => {
     return (
         <div>
-            <Development />
             <Router>
                 <Routes>
                     <Route path="*" element={<NotFound />} />

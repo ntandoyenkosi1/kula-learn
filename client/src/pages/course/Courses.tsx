@@ -44,7 +44,7 @@ const Courses = () => {
                 redirect: 'follow',
                 headers: myHeaders,
             }
-            void fetch('https://kula-learn-server.herokuapp.com/courses/', requestOptions)
+            void fetch('http://localhost:4000/courses/', requestOptions)
                 .then((response) => response.json())
                 .then((result) => {
                     //console.log("Result:", result)
@@ -156,7 +156,7 @@ const Courses = () => {
                 redirect: 'follow',
             }
 
-            void fetch('https://kula-learn-server.herokuapp.com/api/enrol', requestOptions)
+            void fetch('http://localhost:4000/api/enrol', requestOptions)
                 .then((response) => response.json())
                 .then((result) => {
                     if (result.ok == false) {
@@ -170,7 +170,12 @@ const Courses = () => {
                     })
                     const list = Array.from(set)
                     const wrapper = document.getElementById('enrolled-courses')
-                    wrapper!.innerHTML = ''
+                    try{
+                        wrapper!.innerHTML = ''
+                    }
+                    catch{
+                        //
+                    }
                     list.forEach((l: any) => {
                         const myHeaders = new Headers()
                         //myHeaders.append("x-auth-token", sessionStorage.getItem("token")!)
@@ -188,7 +193,7 @@ const Courses = () => {
                             redirect: 'follow',
                         }
 
-                        void fetch('https://kula-learn-server.herokuapp.com/api/course/get', requestOptions)
+                        void fetch('http://localhost:4000/api/course/get', requestOptions)
                             .then((response) => response.json())
                             .then((result: any) => {
                                 const d = document.createElement('div')
@@ -213,12 +218,12 @@ const Courses = () => {
         <div>
             <div className="w3-main" style={{ marginLeft: '210px' }}></div>
             <div className="bg-new">
-                <button
+                {/* <button
                     className="w3-button bg-new w3-xlarge w3-hide-large"
                     onClick={() => (document.getElementById('mySidebar')!.style.display = 'block')}
                 >
                     &#9776;
-                </button>
+                </button> */}
                 <div className="w3-container">
                     <Navigation />
                 </div>

@@ -10,7 +10,7 @@ export async function callApi(endpoint: string, method: string, headers: boolean
     /**
      * url of server
      */
-    const url = `https://kula-learn-server.herokuapp.com/${endpoint}`
+    const url = `http://localhost:4000/${endpoint}`
     if (headers) {
         const myHeaders = new Headers()
         try{

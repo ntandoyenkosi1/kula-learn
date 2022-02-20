@@ -9,7 +9,7 @@ const Main = (props: any) => {
                 <div className="w3-main" style={{ marginLeft: '200px' }}>
                     <div className="bg-new">
                         <button
-                            className="w3-button bg-new w3-xlarge w3-hide-large"
+                            className="bg-new w3-xlarge"
                             onClick={w3_open}
                         >
                             &#9776;
@@ -24,15 +24,15 @@ const Main = (props: any) => {
     } else {
         return (
             <div>
-                <div className="w3-main">
+                <div className="">
                     <div className="bg-new">
-                        <button
-                            className="w3-button bg-new w3-xlarge w3-hide-large"
+                        {/* <button
+                            className=" bg-new"
                             onClick={w3_open}
                         >
                             &#9776;
-                        </button>
-                        <div className="w3-container">
+                        </button> */}
+                        <div className="">
                             <Navigation />
                         </div>
                     </div>

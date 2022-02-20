@@ -44,7 +44,7 @@ const Register = () => {
             redirect: 'follow',
         }
 
-        void fetch('https://kula-learn-server.herokuapp.com/api/user', requestOptions)
+        void fetch('http://localhost:4000/api/user', requestOptions)
             .then((response) => response.json())
             .then(() => {
                 //
@@ -56,12 +56,12 @@ const Register = () => {
         <>
             <div className="w3-main" style={{ marginLeft: '210px' }}></div>
             <div className="bg-new">
-                <button
+                {/* <button
                     className="w3-button bg-new w3-xlarge w3-hide-large"
                     onClick={() => (document.getElementById('mySidebar')!.style.display = 'block')}
                 >
                     &#9776;
-                </button>
+                </button> */}
                 <div className="w3-container">
                     <Navigation />
                 </div>

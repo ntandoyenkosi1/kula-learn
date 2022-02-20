@@ -151,6 +151,7 @@ label {
   .bg-new{
       background-color: #ffffff;
       background: #9cd3d3;
+      text-align: left;
   }
   .custom-alert{
       background-color: #b6e1e0;

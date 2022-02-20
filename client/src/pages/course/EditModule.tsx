@@ -36,7 +36,7 @@ const EditModule = () => {
             redirect: 'follow',
         }
 
-        void fetch('https://kula-learn-server.herokuapp.com/api/course/', requestOptions)
+        void fetch('http://localhost:4000/api/course/', requestOptions)
             .then((response) => response.json())
             .then((result) => {
                 const myHeaders = new Headers()
@@ -54,7 +54,7 @@ const EditModule = () => {
                     redirect: 'follow',
                 }
 
-                void fetch('https://kula-learn-server.herokuapp.com/modules/', requestOptions)
+                void fetch('http://localhost:4000/modules/', requestOptions)
                     .then((response) => response.json())
                     .then((result) => {
                         result.forEach((res: any) => {
@@ -90,7 +90,7 @@ const EditModule = () => {
                                     redirect: 'follow',
                                 }
 
-                                void fetch('https://kula-learn-server.herokuapp.com/api/module', requestOptions).then(
+                                void fetch('http://localhost:4000/api/module', requestOptions).then(
                                     (response) => response.text()
                                 )
                             }
@@ -205,12 +205,12 @@ const EditModule = () => {
         <>
             <div className="w3-main" style={{ marginLeft: '210px' }}></div>
             <div className="bg-new">
-                <button
+                {/* <button
                     className="w3-button bg-new w3-xlarge w3-hide-large"
                     onClick={() => (document.getElementById('mySidebar')!.style.display = 'block')}
                 >
                     &#9776;
-                </button>
+                </button> */}
                 <div className="w3-container">
                     <Navigation />
                 </div>
