@@ -44,7 +44,7 @@ const Register = () => {
             redirect: 'follow',
         }
 
-        void fetch('http://localhost:4000/api/user', requestOptions)
+        void fetch('https://kula-learn-server.herokuapp.com/api/user', requestOptions)
             .then((response) => response.json())
             .then(() => {
                 //

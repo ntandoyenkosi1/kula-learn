@@ -47,7 +47,7 @@ const Instructor = () => {
                 headers: myHeaders,
                 redirect: 'follow',
             }
-            void fetch('http://localhost:4000/courses/', requestOptions)
+            void fetch('https://kula-learn-server.herokuapp.com/courses/', requestOptions)
                 .then((response) => response.json())
                 .then((result) => {
                     let existing = document.getElementById('cards-li')
@@ -191,7 +191,7 @@ const Instructor = () => {
                             redirect: 'follow',
                         }
 
-                        void fetch('http://localhost:4000/courses/enrolled', requestOptions)
+                        void fetch('https://kula-learn-server.herokuapp.com/courses/enrolled', requestOptions)
                             .then((response) => response.json())
                             .then((reso) => {
                                 enrolled.innerText = `Enrolled users: ${reso[0]['COUNT(userID)']}`
@@ -231,7 +231,7 @@ const Instructor = () => {
                 redirect: 'follow',
             }
 
-            void fetch('http://localhost:4000/api/enrol', requestOptions)
+            void fetch('https://kula-learn-server.herokuapp.com/api/enrol', requestOptions)
                 .then((response) => response.json())
                 .then((result) => {
                     const set = new Set()
@@ -255,7 +255,7 @@ const Instructor = () => {
                             redirect: 'follow',
                         }
 
-                        void fetch('http://localhost:4000/api/course/get', requestOptions)
+                        void fetch('https://kula-learn-server.herokuapp.com/api/course/get', requestOptions)
                             .then((response) => response.json())
                             .then((result: any) => {
                                 const d = document.createElement('div')
@@ -285,7 +285,7 @@ const Instructor = () => {
                 headers: myHeaders,
                 redirect: 'follow',
             }
-            void fetch('http://localhost:4000/api/admin/students', requestOptions)
+            void fetch('https://kula-learn-server.herokuapp.com/api/admin/students', requestOptions)
                 .then((response) => response.json())
                 .then((result) => {
                     try {
@@ -320,7 +320,7 @@ const Instructor = () => {
                                 body: raw,
                                 redirect: 'follow',
                             }
-                            void fetch('http://localhost:4000/courses/check', requestOptions)
+                            void fetch('https://kula-learn-server.herokuapp.com/courses/check', requestOptions)
                                 .then((response) => response.json())
                                 .then((result: any) => {
                                     if (result) {

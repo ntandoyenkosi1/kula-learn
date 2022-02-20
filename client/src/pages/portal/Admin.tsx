@@ -47,7 +47,7 @@ const Admin = () => {
                     redirect: 'follow',
                 }
 
-                void fetch('http://localhost:4000/api/admin/administrators', requestOptions)
+                void fetch('https://kula-learn-server.herokuapp.com/api/admin/administrators', requestOptions)
                     .then((response) => response.json())
                     .then((result) => {
                         try {
@@ -87,7 +87,7 @@ const Admin = () => {
                     redirect: 'follow',
                 }
 
-                void fetch('http://localhost:4000/api/admin/instructors', requestOptions)
+                void fetch('https://kula-learn-server.herokuapp.com/api/admin/instructors', requestOptions)
                     .then((response) => response.json())
                     .then((result) => {
                         try {
@@ -170,7 +170,7 @@ const Admin = () => {
                     redirect: 'follow',
                 }
 
-                void fetch('http://localhost:4000/api/admin/students', requestOptions)
+                void fetch('https://kula-learn-server.herokuapp.com/api/admin/students', requestOptions)
                     .then((response) => response.json())
                     .then((result) => {
                         try {

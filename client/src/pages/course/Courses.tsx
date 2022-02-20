@@ -44,7 +44,7 @@ const Courses = () => {
                 redirect: 'follow',
                 headers: myHeaders,
             }
-            void fetch('http://localhost:4000/courses/', requestOptions)
+            void fetch('https://kula-learn-server.herokuapp.com/courses/', requestOptions)
                 .then((response) => response.json())
                 .then((result) => {
                     //console.log("Result:", result)
@@ -156,7 +156,7 @@ const Courses = () => {
                 redirect: 'follow',
             }
 
-            void fetch('http://localhost:4000/api/enrol', requestOptions)
+            void fetch('https://kula-learn-server.herokuapp.com/api/enrol', requestOptions)
                 .then((response) => response.json())
                 .then((result) => {
                     if (result.ok == false) {
@@ -193,7 +193,7 @@ const Courses = () => {
                             redirect: 'follow',
                         }
 
-                        void fetch('http://localhost:4000/api/course/get', requestOptions)
+                        void fetch('https://kula-learn-server.herokuapp.com/api/course/get', requestOptions)
                             .then((response) => response.json())
                             .then((result: any) => {
                                 const d = document.createElement('div')

@@ -101,7 +101,7 @@ void fetch("https://api.imgbb.com/1/upload?key=8d0a7e3689b931e211b03dbd58eab571"
             body: raw,
             redirect: 'follow',
         }
-        await fetch('http://localhost:4000/course/', requestOptions)
+        await fetch('https://kula-learn-server.herokuapp.com/course/', requestOptions)
             .then((response) => response.json())
             .then((result) => {
                 setCourse(result)
@@ -134,7 +134,7 @@ void fetch("https://api.imgbb.com/1/upload?key=8d0a7e3689b931e211b03dbd58eab571"
             body: raw,
             redirect: 'follow',
         }
-        await fetch('http://localhost:4000/module/', requestOptions)
+        await fetch('https://kula-learn-server.herokuapp.com/module/', requestOptions)
             .then((response) => response.json())
             .then((result) => {
                 moduleList?.push(result)
