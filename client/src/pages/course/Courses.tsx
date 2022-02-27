@@ -5,18 +5,13 @@ import { callApi, getCookie } from '../helpers'
 import Footer from '../layout/Footer'
 import Navigation from '../layout/Navigation'
 import { Course, User } from '../types'
-// interface Course {
-//     ID: string
-//     title: string
-// }
+
 const Courses = () => {
     const navigate = useNavigate()
     const [isAuthenticated, setAuth] = useState(true)
     const [user, setUser] = useState<User>()
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [enrolledCourses] = useState<Course>()
     useEffect(() => {
-        //
         try {
             const person = JSON.parse(getCookie('user'))
             try {
@@ -36,8 +31,6 @@ const Courses = () => {
     useEffect(() => {
         if (user) {
             const myHeaders = new Headers()
-            //console.log(sessionStorage.getItem("token"))
-            //myHeaders.append("x-auth-token", sessionStorage.getItem("token")!);
             myHeaders.append('x-auth-token', getCookie('token'))
             const requestOptions: RequestInit = {
                 method: 'GET',
@@ -47,17 +40,14 @@ const Courses = () => {
             void fetch('https://kula-learn-server.herokuapp.com/courses/', requestOptions)
                 .then((response) => response.json())
                 .then((result) => {
-                    //console.log("Result:", result)
                     if (result.ok == false) {
                         navigate('/login')
                         return
                     }
                     let existing = document.getElementById('cards-li')
                     existing!.innerHTML = ''
-                    // existing!.className="row row-cols-2 row-cols-lg-4 g-2 g-lg-3"
                     existing!.className = 'flexbox-container'
                     result.forEach((res: any) => {
-                        //
                         existing = document.getElementById('cards-li')
                         const wrapper = document.createElement('div')
                         const heading = document.createElement('h3')
@@ -92,7 +82,6 @@ const Courses = () => {
                             navigate(`/course/${res.collectionID}`)
                         }
                         edit.onclick = () => {
-                            //
                             navigate(`/course/edit/${res.ID}`)
                         }
                         enrol.onclick = async () => {
@@ -131,9 +120,6 @@ const Courses = () => {
                             wrapper.append(modified)
                         }
                         existing!.append(wrapper)
-                        wrapper!.onclick = () => {
-                            /*console.log(res.title)*/
-                        }
                     })
                 })
         }
@@ -141,7 +127,6 @@ const Courses = () => {
     useEffect(() => {
         if (user) {
             const myHeaders = new Headers()
-            //myHeaders.append("x-auth-token", sessionStorage.getItem("token")!);
             myHeaders.append('x-auth-token', getCookie('token'))
             myHeaders.append('Content-Type', 'application/json')
 
@@ -164,21 +149,18 @@ const Courses = () => {
                         return
                     }
                     const set = new Set()
-                    //console.log(result)
                     result.forEach((t: string) => {
                         set.add(t)
                     })
                     const list = Array.from(set)
                     const wrapper = document.getElementById('enrolled-courses')
-                    try{
+                    try {
                         wrapper!.innerHTML = ''
-                    }
-                    catch{
+                    } catch {
                         //
                     }
                     list.forEach((l: any) => {
                         const myHeaders = new Headers()
-                        //myHeaders.append("x-auth-token", sessionStorage.getItem("token")!)
                         myHeaders.append('x-auth-token', getCookie('token'))
                         myHeaders.append('Content-Type', 'application/json')
 
@@ -193,7 +175,10 @@ const Courses = () => {
                             redirect: 'follow',
                         }
 
-                        void fetch('https://kula-learn-server.herokuapp.com/api/course/get', requestOptions)
+                        void fetch(
+                            'https://kula-learn-server.herokuapp.com/api/course/get',
+                            requestOptions
+                        )
                             .then((response) => response.json())
                             .then((result: any) => {
                                 const d = document.createElement('div')
@@ -211,19 +196,12 @@ const Courses = () => {
                             })
                     })
                 })
-            //.catch((error) => console.log('error', error))
         }
     }, [isAuthenticated])
     return (
         <div>
             <div className="w3-main" style={{ marginLeft: '210px' }}></div>
             <div className="bg-new">
-                {/* <button
-                    className="w3-button bg-new w3-xlarge w3-hide-large"
-                    onClick={() => (document.getElementById('mySidebar')!.style.display = 'block')}
-                >
-                    &#9776;
-                </button> */}
                 <div className="w3-container">
                     <Navigation />
                 </div>

@@ -14,7 +14,6 @@ const Student = () => {
     const [user, setUser] = useState<User>()
     const navigate = useNavigate()
     useEffect(() => {
-        //
         try {
             const person = JSON.parse(getCookie('user')!)
             if (person.user[0] != null) {

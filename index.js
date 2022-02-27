@@ -20,7 +20,8 @@ function generateUUID() {
 			performance.now &&
 			performance.now() * 1000) ||
 		0; //Time in microseconds since page-load or 0 if unsupported
-	return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g,
+	return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
+		/[xy]/g,
 		function (c) {
 			let r = Math.random() * 16; //random number between 0 and 16
 			if (d > 0) {
@@ -106,12 +107,9 @@ app.put("/api/course", [auth, instructor], async (req, res) => {
 app.delete("/courses/", [auth, instructor], async (req, res) => {
 	const db = new sqlite3.Database("database.db");
 	db.serialize(function () {
-		db.all(
-			`DELETE FROM course where ID="${req.body.id}"`,
-			(_err) => {
-				//console.log(0)
-			}
-		);
+		db.all(`DELETE FROM course where ID="${req.body.id}"`, (_err) => {
+			//
+		});
 		db.all(
 			`DELETE FROM module where collectionID="${req.body.collectionID}"`,
 			(_err, video) => {
@@ -241,7 +239,6 @@ app.post("/api/user/get", (req, res) => {
 	db.close();
 });
 app.post("/api/enrol", [auth, student], (req, res) => {
-	//console.log(req.user.roles)
 	const db = new sqlite3.Database("database.db");
 	db.serialize(function () {
 		const id = generateUUID();
@@ -342,37 +339,6 @@ app.get("/api/admin/courses", [auth, admin], (_req, res) => {
 	});
 	db.close();
 });
-// app.post("/auth/login", async(req, res)=>{
-// 	const users = [{ email: "vincent@vincentlab.net", password: "$2b$15$zqY2Q4eOoGzFpZkHJz9HS.BSfXc/HM2E/yTWa1awFmTMgN2bE72Uu", roles: ["admin", "editor", "viewer"] }, { email: "s.ntando99@gmail.com", password: "$2b$15$zqY2Q4eOoGzFpZkHJz9HS.BSfXc/HM2E/yTWa1awFmTMgN2bE72Uu", roles: ["admin", "editor", "viewer"] }];
-//     console.log(req.body.email)
-//     // Get to user from the database, if the user is not there return error
-//     let user = users.find(u => u.email === req.body.email);
-//     if (!user) throw new Error("Invalid email or password.");
-
-//     // Compare the password with the password in the database
-//     const valid = await bcrypt.compare(req.body.password, user.password)
-//     if (!valid){
-// 		res.sendStatus(404)
-// 	}
-// 	else{
-// 		const token = jwt.sign({
-// 			id: user._id,
-// 			roles: user.roles,
-// 		}, "ad5a47fc-5827-4908-8799-8a0130f4dc0e", { expiresIn: "15m" });
-
-// 		res.send({
-// 			ok: true,
-// 			token: token
-// 		});
-// 	}
-
-//     // const token = jwt.sign({
-//     //     id: user._id,
-//     //     roles: user.roles,
-//     // }, "jwtPrivateKey", { expiresIn: "15m" });
-
-// })
-
 app.put("/auth/roles", [auth, admin], (req, res) => {
 	const db = new sqlite3.Database("database.db");
 	db.serialize(function () {

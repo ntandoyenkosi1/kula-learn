@@ -1,4 +1,3 @@
-//import { withAuthenticationRequired } from '@auth0/auth0-react'
 import { Alert, Modal, Button } from 'react-bootstrap'
 import { useState } from 'react'
 import Footer from '../layout/Footer'
@@ -6,7 +5,6 @@ import Main from '../layout/Main'
 import Courses from './Courses'
 import { getCookie } from '../helpers'
 import { User } from '../types'
-//import Loading from '../auth/Loading'
 interface Courses {
     collectionID: string
     title: string
@@ -37,39 +35,29 @@ const Create = () => {
     const [modalShow, setModalShow] = useState(false)
     const [courseToggled, setCourseToggled] = useState(false)
     const [moduleToggled, setModuleToggled] = useState(false)
-    const [publish, setPublish]=useState("false")
-    const [visibility, setVisibility]=useState("public")
+    const [publish, setPublish] = useState('false')
+    const [visibility, setVisibility] = useState('public')
     const [course, setCourse] = useState<Courses>()
-    const [image, setImage]=useState("")
+    const [image, setImage] = useState('')
     const moduleList: any = []
-    const handleFileUpload=(e:any)=>{
-        const formdata = new FormData();
-formdata.append("image", e.target?.files[0], e.target?.files[0].name);
+    const handleFileUpload = (e: any) => {
+        const formdata = new FormData()
+        formdata.append('image', e.target?.files[0], e.target?.files[0].name)
 
-const requestOptions:RequestInit = {
-  method: 'POST',
-  body: formdata,
-  redirect: 'follow'
-};
+        const requestOptions: RequestInit = {
+            method: 'POST',
+            body: formdata,
+            redirect: 'follow',
+        }
 
-void fetch("https://api.imgbb.com/1/upload?key=8d0a7e3689b931e211b03dbd58eab571", requestOptions)
-  .then(response => response.json())
-  .then((result:any)=> {
-        setImage(result.data?.display_url)
-  })
-  //.catch(error => console.log('error', error));
-//         const formdata = new FormData();
-//         formdata.append("image", e.target?., e.target?.files[0].name);
-//         const requestOptions:RequestInit = {
-//         method: 'POST',
-//         body: formdata,
-//         redirect: 'follow'
-//         };
-
-//     fetch("https://api.imgbb.com/1/upload?key=8d0a7e3689b931e211b03dbd58eab571", requestOptions)
-//   .then(response => response.text())
-//   .then(result => console.log(result))
-//   .catch(error => console.log('error', error));
+        void fetch(
+            'https://api.imgbb.com/1/upload?key=8d0a7e3689b931e211b03dbd58eab571',
+            requestOptions
+        )
+            .then((response) => response.json())
+            .then((result: any) => {
+                setImage(result.data?.display_url)
+            })
     }
     const handleAddCourse = async () => {
         const t = (document.getElementById('course-title') as HTMLInputElement).value
@@ -81,9 +69,9 @@ void fetch("https://api.imgbb.com/1/upload?key=8d0a7e3689b931e211b03dbd58eab571"
         const collection = generateUUID()
         setCourse({ collectionID: collection, title: t, description: d, image: image, iat: iat })
         const myHeaders = new Headers()
-        myHeaders.append('x-auth-token', getCookie("token"))
+        myHeaders.append('x-auth-token', getCookie('token'))
         myHeaders.append('Content-Type', 'application/json')
-        const person:User= JSON.parse(getCookie('user')).user[0]
+        const person: User = JSON.parse(getCookie('user')).user[0]
         const raw = JSON.stringify({
             collectionID: collection,
             title: t,
@@ -91,8 +79,8 @@ void fetch("https://api.imgbb.com/1/upload?key=8d0a7e3689b931e211b03dbd58eab571"
             image: image,
             iat: iat,
             uploader: person.email,
-            visibility:visibility,
-            published: publish
+            visibility: visibility,
+            published: publish,
         })
 
         const requestOptions: RequestInit = {
@@ -117,7 +105,7 @@ void fetch("https://api.imgbb.com/1/upload?key=8d0a7e3689b931e211b03dbd58eab571"
             return
         }
         const myHeaders = new Headers()
-        myHeaders.append('x-auth-token', getCookie("token"))
+        myHeaders.append('x-auth-token', getCookie('token'))
         myHeaders.append('Content-Type', 'application/json')
         const raw = JSON.stringify({
             collectionID: course?.collectionID,
@@ -125,7 +113,7 @@ void fetch("https://api.imgbb.com/1/upload?key=8d0a7e3689b931e211b03dbd58eab571"
             title: moduleTitle,
             shortDescription: short,
             longDescription: long,
-            video: link
+            video: link,
         })
 
         const requestOptions: RequestInit = {
@@ -157,11 +145,9 @@ void fetch("https://api.imgbb.com/1/upload?key=8d0a7e3689b931e211b03dbd58eab571"
     function Module() {
         return (
             <div>
-                 <Alert className='custom-alert'  >
-                     <Alert.Heading>
-                        <h1>
-                           New Module Details
-                        </h1>
+                <Alert className="custom-alert">
+                    <Alert.Heading>
+                        <h1>New Module Details</h1>
                     </Alert.Heading>
                 </Alert>
                 <h4>Module Title</h4>
@@ -171,7 +157,7 @@ void fetch("https://api.imgbb.com/1/upload?key=8d0a7e3689b931e211b03dbd58eab571"
                         id="module-title"
                         className="form-control"
                         type="text"
-                        placeholder='Title'
+                        placeholder="Title"
                     />
                 </div>
                 <div className="mb-3">
@@ -181,11 +167,7 @@ void fetch("https://api.imgbb.com/1/upload?key=8d0a7e3689b931e211b03dbd58eab571"
                 <h2>Short Description</h2>
                 <p>Use this area to give a short description of the new module. </p>
                 <div className="form-floating textarea mb-3">
-                    <textarea
-                        className="form-control"
-                        maxLength={500}
-                        id="video-short"
-                    ></textarea>
+                    <textarea className="form-control" maxLength={500} id="video-short"></textarea>
                     <label>
                         Short description{' '}
                         <span style={{ color: 'red' }}>(max: 500 characters)</span>
@@ -193,7 +175,8 @@ void fetch("https://api.imgbb.com/1/upload?key=8d0a7e3689b931e211b03dbd58eab571"
                 </div>
                 <h4>Long description</h4>
                 <p>
-                    Use this area to give a long description of the new module. Take note that Markdown text is supported.
+                    Use this area to give a long description of the new module. Take note that
+                    Markdown text is supported.
                 </p>
                 <div className="form-floating textarea mb-3">
                     <textarea
@@ -208,8 +191,11 @@ void fetch("https://api.imgbb.com/1/upload?key=8d0a7e3689b931e211b03dbd58eab571"
                     </label>
                 </div>
                 <div className="mb-3">
-                    <label className="form-label"><b>(Optional) </b>Enter a video link here if there is a video version for this module.
-                    <b></b></label>
+                    <label className="form-label">
+                        <b>(Optional) </b>Enter a video link here if there is a video version for
+                        this module.
+                        <b></b>
+                    </label>
                     <input
                         id="video-link"
                         className="form-control"
@@ -241,8 +227,8 @@ void fetch("https://api.imgbb.com/1/upload?key=8d0a7e3689b931e211b03dbd58eab571"
     return (
         <div>
             <Main origin="Home" />
-             <Alert className='custom-alert'>
-                 <Alert.Heading>
+            <Alert className="custom-alert">
+                <Alert.Heading>
                     <h1>
                         <b>Add a new course</b>
                     </h1>
@@ -285,57 +271,99 @@ void fetch("https://api.imgbb.com/1/upload?key=8d0a7e3689b931e211b03dbd58eab571"
                                 placeholder="Enter short description"
                             />
                         </div>
-                        {/* <div className="input-group mb-3">
-                            <input
-                                type="text"
-                                id="course-link"
-                                required
-                                maxLength={200}
-                                className="form-control"
-                                placeholder="Enter image url of the course."
-                            />
-                        </div> */}
                         <div className="mb-3">
-                        <label htmlFor="file" className="form-label">Upload a picture for the course</label>
-                        <input className="form-control form-control-sm" onChange={handleFileUpload} id="file" type="file"/>
+                            <label htmlFor="file" className="form-label">
+                                Upload a picture for the course
+                            </label>
+                            <input
+                                className="form-control form-control-sm"
+                                onChange={handleFileUpload}
+                                id="file"
+                                type="file"
+                            />
                         </div>
                         <h3>Publish information</h3>
-                        <p style={{marginBottom:"0px"}}><b>Publish Now: </b>This course will be available immediately.</p>
-                        <p><b>Publish Later: </b>This course will not be available immediately. You will be able to publish it after modules have been added.</p>
-                         <div className="form-check form-check-inline">
-                        <input className="form-check-input" type="radio" onChange={()=>setPublish("true")} name="inlineRadioOptions" id="publishNow" value="now"/>
-                        <label className="form-check-label" htmlFor="inlineRadio1">Publish Now</label>
+                        <p style={{ marginBottom: '0px' }}>
+                            <b>Publish Now: </b>This course will be available immediately.
+                        </p>
+                        <p>
+                            <b>Publish Later: </b>This course will not be available immediately. You
+                            will be able to publish it after modules have been added.
+                        </p>
+                        <div className="form-check form-check-inline">
+                            <input
+                                className="form-check-input"
+                                type="radio"
+                                onChange={() => setPublish('true')}
+                                name="inlineRadioOptions"
+                                id="publishNow"
+                                value="now"
+                            />
+                            <label className="form-check-label" htmlFor="inlineRadio1">
+                                Publish Now
+                            </label>
                         </div>
                         <div className="form-check form-check-inline">
-                        <input className="form-check-input" type="radio" onChange={()=>setPublish("false")} name="inlineRadioOptions" id="publishLater" value="later" defaultChecked/>
-                        <label className="form-check-label" htmlFor="inlineRadio2">Publish Later</label>
+                            <input
+                                className="form-check-input"
+                                type="radio"
+                                onChange={() => setPublish('false')}
+                                name="inlineRadioOptions"
+                                id="publishLater"
+                                value="later"
+                                defaultChecked
+                            />
+                            <label className="form-check-label" htmlFor="inlineRadio2">
+                                Publish Later
+                            </label>
                         </div>
                         <h3>Visibility Information</h3>
-                        <p style={{marginBottom:"0px"}}><b>Public: </b>Everyone who is signed in can access this course.</p>
-                        <p><b>Private: </b>Only people you add by email will have access to the course.</p>
+                        <p style={{ marginBottom: '0px' }}>
+                            <b>Public: </b>Everyone who is signed in can access this course.
+                        </p>
+                        <p>
+                            <b>Private: </b>Only people you add by email will have access to the
+                            course.
+                        </p>
                         <div className="form-check form-check-inline">
-                        <input className="form-check-input" type="radio" onChange={()=>setVisibility("public")} name="VisibilityOptions" id="publicVisibility" value="public" defaultChecked/>
-                        <label className="form-check-label" htmlFor="VisibilityOptions">Public</label>
+                            <input
+                                className="form-check-input"
+                                type="radio"
+                                onChange={() => setVisibility('public')}
+                                name="VisibilityOptions"
+                                id="publicVisibility"
+                                value="public"
+                                defaultChecked
+                            />
+                            <label className="form-check-label" htmlFor="VisibilityOptions">
+                                Public
+                            </label>
                         </div>
                         <div className="form-check form-check-inline">
-                        <input className="form-check-input" onChange={()=>setVisibility("private")} type="radio" name="VisibilityOptions" id="privateVisibility" value="private"/>
-                        <label className="form-check-label" htmlFor="VisibilityOptions">Private</label>
+                            <input
+                                className="form-check-input"
+                                onChange={() => setVisibility('private')}
+                                type="radio"
+                                name="VisibilityOptions"
+                                id="privateVisibility"
+                                value="private"
+                            />
+                            <label className="form-check-label" htmlFor="VisibilityOptions">
+                                Private
+                            </label>
                         </div>
                         <div>
                             <button className="btn wide" onClick={handleAddCourse}>
                                 Save
                             </button>
-                            </div>
+                        </div>
                     </>
                 )}
                 {courseToggled ? (
                     <>
                         <h2>Add a module</h2>
                         <hr />
-                        <button
-                            className="btn"
-                            onClick={() => setModalShow(true)}
-                        >
+                        <button className="btn" onClick={() => setModalShow(true)}>
                             Click here to add a new module
                         </button>
                         <hr />
@@ -357,7 +385,6 @@ void fetch("https://api.imgbb.com/1/upload?key=8d0a7e3689b931e211b03dbd58eab571"
                 ) : (
                     <></>
                 )}
-                {/* <div id="modules-added"></div> */}
                 <div className="container container-center">
                     <div
                         id="modules-added"

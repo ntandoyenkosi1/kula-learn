@@ -21,7 +21,6 @@ const EditModule = () => {
         setModalShow(false)
     }
     useEffect(() => {
-        //
         const myHeaders = new Headers()
         myHeaders.append('Content-Type', 'application/json')
 
@@ -75,7 +74,6 @@ const EditModule = () => {
                                 setModalShow(true)
                             }
                             deleteBtn.onclick = () => {
-                                //
                                 const myHeaders = new Headers()
                                 myHeaders.append('Content-Type', 'application/json')
 
@@ -90,9 +88,10 @@ const EditModule = () => {
                                     redirect: 'follow',
                                 }
 
-                                void fetch('https://kula-learn-server.herokuapp.com/api/module', requestOptions).then(
-                                    (response) => response.text()
-                                )
+                                void fetch(
+                                    'https://kula-learn-server.herokuapp.com/api/module',
+                                    requestOptions
+                                ).then((response) => response.text())
                             }
                             wrapper.className = 'shadow p-3 mb-5 bg-body rounded'
                             wrapper.append(heading)
@@ -186,7 +185,6 @@ const EditModule = () => {
         )
     }
     function ModuleModal(props: any) {
-        //console.log(props)
         return (
             <Modal {...props} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
                 <Modal.Header closeButton>

@@ -1,18 +1,14 @@
-//import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from 'react-router-dom'
-
-//import { Button } from "react-bootstrap";
 const LogoutButton = () => {
     const navigate = useNavigate()
     const handleLogout = () => {
-        //
         sessionStorage.clear()
-        document.cookie.split(';').forEach(function(c) {
-            document.cookie = c.trim().split('=')[0] + '=;' + 'expires=Thu, 01 Jan 1970 00:00:00 UTC;';
-          });
+        document.cookie.split(';').forEach(function (c) {
+            document.cookie =
+                c.trim().split('=')[0] + '=;' + 'expires=Thu, 01 Jan 1970 00:00:00 UTC;'
+        })
         navigate('/')
     }
-    //const { logout } = useAuth0();
     const icon = (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -33,9 +29,6 @@ const LogoutButton = () => {
         </svg>
     )
     return (
-        // <button className="btn" onClick={() => logout({ returnTo: window.location.origin })}>
-        //   {icon}Log Out
-        // </button>
         <button className="btn" onClick={handleLogout}>
             {icon}Logout
         </button>

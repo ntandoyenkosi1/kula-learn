@@ -1,4 +1,3 @@
-//import { withAuthenticationRequired } from '@auth0/auth0-react'
 import { useEffect } from 'react'
 import { Alert } from 'react-bootstrap'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -7,11 +6,9 @@ const Edit = () => {
     const { id } = useParams()
     const navigate = useNavigate()
     const handleEditModules = () => {
-        //
         navigate(`/module/${id}`)
     }
     const handleEdit = () => {
-        //
         const titleValue = (document.getElementById('module-title') as HTMLInputElement).value
         const shortValue = (document.getElementById('video-short') as HTMLInputElement).value
         const imageVale = (document.getElementById('image-link') as HTMLInputElement).value
@@ -32,14 +29,9 @@ const Edit = () => {
             redirect: 'follow',
         }
 
-        void fetch('https://kula-learn-server.herokuapp.com/api/course/', requestOptions).then((response) =>
-            response.json()
+        void fetch('https://kula-learn-server.herokuapp.com/api/course/', requestOptions).then(
+            (response) => response.json()
         )
-        // .then((result) => {
-        //     console.log(result)
-        //     //navigate('/courses')
-        // })
-        // .catch((error) => console.log('error', error))
     }
     useEffect(() => {
         const myHeaders = new Headers()
@@ -68,7 +60,6 @@ const Edit = () => {
                 image!.value = result[0].imageUrl
                 imageDisp!.src = result[0].imageUrl
             })
-        // .catch((error) => console.log('error', error))
     }, [])
     return (
         <>

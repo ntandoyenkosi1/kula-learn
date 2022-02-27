@@ -1,7 +1,6 @@
-//import { useAuth0 } from "@auth0/auth0-react"
 import { useEffect, useState } from 'react'
 import { Accordion, Alert } from 'react-bootstrap'
-//import icon from "./assets/falling-star.png"
+
 import explain from '../assets/presentation.png'
 import Loading from '../auth/Loading'
 import Footer from '../layout/Footer'
@@ -39,7 +38,7 @@ const Module = (props: any) => {
                 style={{ width: '200px' }}
                 id="mySidebar"
             >
-                 <Alert className='custom-alert' variant="success">
+                <Alert className="custom-alert" variant="success">
                     <h2>
                         <b>Chapters</b>
                     </h2>

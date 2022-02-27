@@ -1,9 +1,6 @@
-// import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from 'react-router-dom'
-//import { Button } from "react-bootstrap";
 const LoginButton = () => {
     const navigate = useNavigate()
-    // const { loginWithRedirect } = useAuth0();
     const icon = (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -23,7 +20,6 @@ const LoginButton = () => {
             />
         </svg>
     )
-    // return <button className="btn" onClick={() => loginWithRedirect()}>{icon}Log In/Register</button>;
     return (
         <button className="btn" onClick={() => navigate('/login')}>
             {icon}Login

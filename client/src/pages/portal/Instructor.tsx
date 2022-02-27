@@ -18,7 +18,6 @@ const Instructor = () => {
     const [id, setID] = useState('')
     const navigate = useNavigate()
     useEffect(() => {
-        //
         try {
             const person = JSON.parse(getCookie('user')!)
             if (person.user[0] != null) {
@@ -119,7 +118,6 @@ const Instructor = () => {
                             }
                         }
                         edit.onclick = () => {
-                            //
                             navigate(`/course/edit/${res.ID}`)
                         }
                         enrol.onclick = async () => {
@@ -149,7 +147,6 @@ const Instructor = () => {
                         }
                         del.innerText = 'Delete'
                         del.className = 'btn'
-                        //buttonWrapper.append(preview)
                         if (user?.role == 'instructor' || user?.role == 'admin') {
                             buttonWrapper.append(preview)
                             buttonWrapper.append(del)
@@ -179,7 +176,6 @@ const Instructor = () => {
                         }
                         const myHeaders = new Headers()
                         myHeaders.append('x-auth-token', getCookie('token'))
-                        //myHeaders.append('x-auth-token', sessionStorage.getItem('token')!)
                         myHeaders.append('Content-Type', 'application/json')
                         const raw = JSON.stringify({
                             courseID: `${res.collectionID}`,
@@ -191,7 +187,10 @@ const Instructor = () => {
                             redirect: 'follow',
                         }
 
-                        void fetch('https://kula-learn-server.herokuapp.com/courses/enrolled', requestOptions)
+                        void fetch(
+                            'https://kula-learn-server.herokuapp.com/courses/enrolled',
+                            requestOptions
+                        )
                             .then((response) => response.json())
                             .then((reso) => {
                                 enrolled.innerText = `Enrolled users: ${reso[0]['COUNT(userID)']}`
@@ -206,9 +205,6 @@ const Instructor = () => {
                         wrapper.append(vis)
                         wrapper.append(manageUsers)
                         existing!.append(wrapper)
-                        wrapper!.onclick = () => {
-                            /*console.log(res.title)*/
-                        }
                     })
                 })
         }
@@ -217,7 +213,6 @@ const Instructor = () => {
         if (user) {
             const myHeaders = new Headers()
             myHeaders.append('x-auth-token', getCookie('token'))
-            //myHeaders.append('x-auth-token', sessionStorage.getItem('token')!)
             myHeaders.append('Content-Type', 'application/json')
 
             const raw = JSON.stringify({
@@ -255,7 +250,10 @@ const Instructor = () => {
                             redirect: 'follow',
                         }
 
-                        void fetch('https://kula-learn-server.herokuapp.com/api/course/get', requestOptions)
+                        void fetch(
+                            'https://kula-learn-server.herokuapp.com/api/course/get',
+                            requestOptions
+                        )
                             .then((response) => response.json())
                             .then((result: any) => {
                                 const d = document.createElement('div')
@@ -279,7 +277,6 @@ const Instructor = () => {
         if (props && props.Id) {
             const myHeaders = new Headers()
             myHeaders.append('x-auth-token', getCookie('token'))
-            //myHeaders.append('x-auth-token', sessionStorage.getItem('token')!)
             const requestOptions: RequestInit = {
                 method: 'GET',
                 headers: myHeaders,
@@ -307,7 +304,6 @@ const Instructor = () => {
                             email.innerText = element.email
                             const myHeaders = new Headers()
                             myHeaders.append('x-auth-token', getCookie('token'))
-                            //myHeaders.append('x-auth-token', sessionStorage.getItem('token')!)
                             myHeaders.append('Content-Type', 'application/json')
 
                             const raw = JSON.stringify({
@@ -320,7 +316,10 @@ const Instructor = () => {
                                 body: raw,
                                 redirect: 'follow',
                             }
-                            void fetch('https://kula-learn-server.herokuapp.com/courses/check', requestOptions)
+                            void fetch(
+                                'https://kula-learn-server.herokuapp.com/courses/check',
+                                requestOptions
+                            )
                                 .then((response) => response.json())
                                 .then((result: any) => {
                                     if (result) {

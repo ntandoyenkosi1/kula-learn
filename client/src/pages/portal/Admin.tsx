@@ -15,7 +15,6 @@ const Admin = () => {
     const [user, setUser] = useState<User>()
     const navigate = useNavigate()
     useEffect(() => {
-        //
         try {
             const person = JSON.parse(getCookie('user')!)
             if (person.user[0] != null) {
@@ -39,7 +38,6 @@ const Admin = () => {
         if (isAuthenticated) {
             if (user?.role == 'admin') {
                 const myHeaders = new Headers()
-                //myHeaders.append('x-auth-token', sessionStorage.getItem('token')!)
                 myHeaders.append('x-auth-token', getCookie('token'))
                 const requestOptions: RequestInit = {
                     method: 'GET',
@@ -47,7 +45,10 @@ const Admin = () => {
                     redirect: 'follow',
                 }
 
-                void fetch('https://kula-learn-server.herokuapp.com/api/admin/administrators', requestOptions)
+                void fetch(
+                    'https://kula-learn-server.herokuapp.com/api/admin/administrators',
+                    requestOptions
+                )
                     .then((response) => response.json())
                     .then((result) => {
                         try {
@@ -79,7 +80,6 @@ const Admin = () => {
         if (isAuthenticated) {
             if (user?.role == 'admin') {
                 const myHeaders = new Headers()
-                //myHeaders.append('x-auth-token', sessionStorage.getItem('token')!)
                 myHeaders.append('x-auth-token', getCookie('token'))
                 const requestOptions: RequestInit = {
                     method: 'GET',
@@ -87,7 +87,10 @@ const Admin = () => {
                     redirect: 'follow',
                 }
 
-                void fetch('https://kula-learn-server.herokuapp.com/api/admin/instructors', requestOptions)
+                void fetch(
+                    'https://kula-learn-server.herokuapp.com/api/admin/instructors',
+                    requestOptions
+                )
                     .then((response) => response.json())
                     .then((result) => {
                         try {
@@ -162,7 +165,6 @@ const Admin = () => {
         if (isAuthenticated) {
             if (user?.role == 'admin') {
                 const myHeaders = new Headers()
-                //myHeaders.append('x-auth-token', sessionStorage.getItem('token')!)
                 myHeaders.append('x-auth-token', getCookie('token'))
                 const requestOptions: RequestInit = {
                     method: 'GET',
@@ -170,7 +172,10 @@ const Admin = () => {
                     redirect: 'follow',
                 }
 
-                void fetch('https://kula-learn-server.herokuapp.com/api/admin/students', requestOptions)
+                void fetch(
+                    'https://kula-learn-server.herokuapp.com/api/admin/students',
+                    requestOptions
+                )
                     .then((response) => response.json())
                     .then((result) => {
                         try {

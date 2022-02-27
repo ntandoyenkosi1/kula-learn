@@ -1,9 +1,5 @@
-//import { useAuth0 } from "@auth0/auth0-react"
 import { useEffect, useState } from 'react'
 import { Alert } from 'react-bootstrap'
-//import icon from "./assets/falling-star.png"
-//import video from '../assets/Media1.mp4'
-//import explain from '../assets/presentation.png'
 import Loading from '../auth/Loading'
 import Footer from '../layout/Footer'
 import Navigation from '../layout/Navigation'
@@ -23,7 +19,7 @@ const ModuleView = (props: any) => {
         tabCell.onclick = () => {
             setToggled(true)
             setData(l)
-            if(l.video){
+            if (l.video) {
                 if (l.video.includes('https://www.youtube.com/watch?v=')) {
                     const id = l.video.replace('https://www.youtube.com/watch?v=', '').toString()
                     const and = id.indexOf('&')
@@ -52,7 +48,7 @@ const ModuleView = (props: any) => {
                 style={{ width: '200px' }}
                 id="mySidebar"
             >
-                 <Alert className='custom-alert' variant="success">
+                <Alert className="custom-alert" variant="success">
                     <h2>
                         <b>Chapters</b>
                     </h2>

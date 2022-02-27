@@ -48,21 +48,7 @@ const Navigation = () => {
                     </Navbar.Brand>
                     <Navbar.Toggle />
                     <Navbar.Collapse className="justify-content-end">
-                        {/* <Navbar.Text>
-                            <a
-                                className="button text-center fs-5 w3-large"
-                                style={{ color: 'white' }}
-                            >
-                                <LogoutButton />
-                            </a>
-                        </Navbar.Text> */}
                         <Navbar.Text>
-                            {/* <a
-                                className="button text-center fs-5 w3-large"
-                                style={{ color: 'white' }}
-                            >
-                                <button className='btn'>Profile</button>
-                            </a> */}
                             <Dropdown drop="start">
                                 <Dropdown.Toggle variant="secondary">Account</Dropdown.Toggle>
 

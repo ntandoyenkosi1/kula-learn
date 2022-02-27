@@ -34,7 +34,7 @@ const Register = () => {
             lastName: `${lastName.value}`,
             email: `${email.value}`,
             password: `${password.value}`,
-            role:`${role.value}`
+            role: `${role.value}`,
         })
 
         const requestOptions: RequestInit = {
@@ -47,21 +47,13 @@ const Register = () => {
         void fetch('https://kula-learn-server.herokuapp.com/api/user', requestOptions)
             .then((response) => response.json())
             .then(() => {
-                //
                 navigate('/login')
             })
-        //.catch(error => console.log('error', error));
     }
     return (
         <>
             <div className="w3-main" style={{ marginLeft: '210px' }}></div>
             <div className="bg-new">
-                {/* <button
-                    className="w3-button bg-new w3-xlarge w3-hide-large"
-                    onClick={() => (document.getElementById('mySidebar')!.style.display = 'block')}
-                >
-                    &#9776;
-                </button> */}
                 <div className="w3-container">
                     <Navigation />
                 </div>

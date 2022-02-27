@@ -12,7 +12,6 @@ module.exports = (req, res, next) => {
 	try {
 		const s = "ad5a47fc-5827-4908-8799-8a0130f4dc0e";
 		const decoded = jwt.verify(token, s);
-		//console.log(decoded)
 		req.user = decoded;
 	} catch (error) {
 		return res.status(401).send({

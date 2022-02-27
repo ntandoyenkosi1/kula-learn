@@ -1,5 +1,3 @@
-//import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
-//import { useEffect } from 'react';
 import { useEffect, useState } from 'react'
 import { Alert } from 'react-bootstrap'
 import { callApi, getCookie } from '../helpers'
@@ -16,14 +14,6 @@ const Profile = () => {
         try {
             const person = JSON.parse(getCookie('user')!)
             setUser(person.user[0])
-            // const temp:any={
-            //   "firstName": user?.firstName,
-            //   "lastName": user?.lastName,
-            //   "email": user?.email,
-            //   "createdAt": user?.createdAt,
-            //   "picture": user?.picture
-            // }
-            // setTempUser(temp)
             if (person.user[0] != null) {
                 setAuth(true)
             } else {
@@ -73,8 +63,6 @@ const Profile = () => {
                         src={user?.picture}
                         style={{ maxHeight: '190px', maxWidth: '190px' }}
                         alt="Profile"
-
-                        // className="rounded-circle img-fluid profile-picture mb-3 mb-md-0 "
                     />
                 </div>
                 <div className="mb-3">
@@ -89,7 +77,6 @@ const Profile = () => {
                     />
                 </div>
                 <div className="col-md text-center text-md-left">
-                    {/* Name: <h2>{user?.name}</h2> */}
                     Email:{' '}
                     <p className="">
                         <b>{user?.email}</b>
